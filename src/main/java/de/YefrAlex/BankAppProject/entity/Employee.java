@@ -75,7 +75,7 @@ public class Employee {
     @OneToMany(mappedBy = "assistant_manager_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private List<Account> assistansManagerAccounts;
+    private List<Account> assistantManagerAccounts;
 
     @Override
     public boolean equals(Object o) {

@@ -1,5 +1,3 @@
---liquibase formatted sql
---changeset elina:v.0.1.0-ddl
 
 create table if not exists die_bank.employees
 (
@@ -12,7 +10,7 @@ create table if not exists die_bank.employees
     country    varchar(16) not null,
     created_at timestamp   DEFAULT CURRENT_TIMESTAMP,
     update_at  timestamp   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    is_blocked  bool        not null default false,
+    is_blocked  boolean        not null default false,
     unique (email)
 );
 
@@ -98,7 +96,7 @@ create table if not exists die_bank.transactions
 
 create table if not exists die_bank.payments
 (
-    id                    bigint         primary key,
+    id                    bigint         primary key auto_increment,
     agreement_id          int,
     payment_sum           decimal(12, 2) not null,
     expected_payment_date timestamp  DEFAULT CURRENT_TIMESTAMP,
