@@ -1,3 +1,6 @@
+--liquibase formatted sql
+--changeset bank:v.0.1.0-ddl
+
 
 create table if not exists die_bank.employees
 (
@@ -58,7 +61,7 @@ create table if not exists die_bank.products
     interest_rate   decimal(6, 4) not null,
     limit_sum       decimal (12,2),
     limit_duration  int,
-    description     varchar,
+    description     varchar(255),
     created_at      timestamp    DEFAULT CURRENT_TIMESTAMP,
     update_at       timestamp    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     is_blocked      boolean      not null default false
@@ -72,8 +75,8 @@ create table if not exists die_bank.agreements
     interest_rate decimal(4, 2)  not null,
     is_active     boolean        not null,
     sum           decimal(12, 2) not null,
-    duration      int            not null
-    description   varchar
+    duration      int            not null,
+    description   varchar(255),
     created_at    timestamp    DEFAULT CURRENT_TIMESTAMP,
     update_at     timestamp    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     is_blocked    boolean      not null default false,
@@ -86,7 +89,7 @@ create table if not exists die_bank.transactions
     id                binary(16) primary key,
     debit_account_id  binary(16)     not null,
     credit_account_id binary(16)     not null,
-    type              varchar        not null,
+    type              varchar(10)        not null,
     amount            decimal(12, 2) not null,
     description       varchar(255),
     created_at        timestamp      DEFAULT CURRENT_TIMESTAMP,
@@ -97,7 +100,7 @@ create table if not exists die_bank.transactions
 create table if not exists die_bank.payments
 (
     id                    bigint         primary key auto_increment,
-    agreement_id          int,
+    agreement_id          bigint,
     payment_sum           decimal(12, 2) not null,
     expected_payment_date timestamp  DEFAULT CURRENT_TIMESTAMP,
     real_payment_date     timestamp  DEFAULT CURRENT_TIMESTAMP,

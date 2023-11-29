@@ -1,6 +1,7 @@
 package de.YefrAlex.BankAppProject.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import de.YefrAlex.BankAppProject.entity.enums.TransactionType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -35,7 +36,7 @@ public class Transaction {
     private Account creditAccountId;
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    private Integer type;
+    private TransactionType type;
 
     @Column(name = "amount", precision = 2)
     private BigDecimal amount;
