@@ -67,12 +67,12 @@ public class Employee {
     @Column(name = "is_blocked", nullable = false)
     private boolean isBlocked;
 
-    @OneToMany(mappedBy = "main_manager_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "mainManagerId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private List<Account> accounts;
+    private List<Account> mainManagerAccounts;
 
-    @OneToMany(mappedBy = "assistant_manager_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "assistantManagerId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Account> assistantManagerAccounts;

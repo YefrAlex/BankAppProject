@@ -12,7 +12,7 @@ create table if not exists die_bank.employees
     phone      varchar(16) not null,
     country    varchar(16) not null,
     created_at timestamp   DEFAULT CURRENT_TIMESTAMP,
-    update_at  timestamp   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at  timestamp   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     is_blocked  boolean        not null default false,
     unique (email)
 );
@@ -29,7 +29,7 @@ create table if not exists die_bank.clients
     phone         varchar(16) not null,
     country       varchar(16) not null,
     created_at    timestamp   DEFAULT CURRENT_TIMESTAMP,
-    update_at     timestamp   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at     timestamp   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     is_blocked    boolean    not null default false,
     unique (tax_code, email)
 );
@@ -45,7 +45,7 @@ create table if not exists die_bank.accounts
     balance                 decimal(15, 2)       DEFAULT 0 not null,
     currency_code           varchar(3)  not null,
     created_at              timestamp   DEFAULT CURRENT_TIMESTAMP,
-    update_at               timestamp   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at               timestamp   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     is_blocked              boolean     not null default false,
     foreign key (main_manager_id) references employees (id),
     foreign key (assistant_manager_id) references employees (id),
@@ -63,7 +63,7 @@ create table if not exists die_bank.products
     limit_duration  int,
     description     varchar(255),
     created_at      timestamp    DEFAULT CURRENT_TIMESTAMP,
-    update_at       timestamp    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at       timestamp    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     is_blocked      boolean      not null default false
 );
 
@@ -78,7 +78,7 @@ create table if not exists die_bank.agreements
     duration      int            not null,
     description   varchar(255),
     created_at    timestamp    DEFAULT CURRENT_TIMESTAMP,
-    update_at     timestamp    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at     timestamp    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     is_blocked    boolean      not null default false,
     foreign key (account_id) references accounts (id),
     foreign key (product_id) references products (id)
