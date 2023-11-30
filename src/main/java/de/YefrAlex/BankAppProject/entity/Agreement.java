@@ -40,8 +40,8 @@ public class Agreement {
     @Column(name = "interest_rate")
     private BigDecimal interestRate;
 
-    @Column(name = "sum")
-    private BigDecimal sum;
+    @Column(name = "amount")
+    private BigDecimal amount;
 
     @Column(name = "duration", nullable = false)
     private int duration;

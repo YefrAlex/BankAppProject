@@ -67,3 +67,46 @@ VALUES (UUID_TO_BIN('24b33ca1-9e86-420a-bec5-746236e105e1'), UUID_TO_BIN('7e78fa
                  null,'AYB00092345', 'OTHER', 355.00, 'EUR'),
         (UUID_TO_BIN('102c4789-8660-4935-8bad-b631e281a9ae'), UUID_TO_BIN('daf07ca2-7e65-4fbf-aac4-fc3f08cd526e'), UUID_TO_BIN('cc4b231b-baf5-47b1-a0d1-380419b95729'),
                  null,'AYB00102345', 'OTHER', 482.00, 'EUR');
+
+
+INSERT INTO die_bank.products (id, product_typ, currency_code, interest_rate, limit_sum, limit_duration, description )
+VALUES (1,'LOAN', 'EUR', 7.00, 50000.00, 24, 'simple cash credit'),
+       (2,'AUTO_LOAN', 'EUR', 5.25, 155000.00, 36, 'car purchase credit'),
+       (3,'MORTGAGE', 'EUR', 5.05, 400000.00, 180, 'loan for the purchase of residential real estate'),
+       (4,'DEPOSIT', 'EUR', 3.75, 10000.00, 24, 'deposit without the possibility of early withdrawal'),
+       (5,'DEBIT_CARD', 'EUR', 2.00, 25500.00, 60, 'interest is calculated on the balance'),
+       (6,'CREDIT_CARD', 'EUR', 9.00, 6000.00, 24, '50 days of credit holidays');
+
+INSERT INTO die_bank.agreements (id, account_id, product_id, interest_rate, amount, duration, description )
+VALUES (1, UUID_TO_BIN('24b33ca1-9e86-420a-bec5-746236e105e1'), 2, 5.5, 125000.00, 36, 'car loan for a maximum period'),
+       (2, UUID_TO_BIN('cbce97ac-dd09-4cf1-8771-0b767b801740'), 4, 3.75, 27400.00, 24, 'deposit without the possibility of early withdrawal'),
+       (3, UUID_TO_BIN('ee34abe1-b6ff-4b00-b2be-dc3c7d2f864d'), 1, 7.00, 20700.00, 24, 'simple cash credit for a maximum period'),
+       (4, UUID_TO_BIN('f1eb4d13-9ed9-4589-947b-8f564067a6d3'), 5, 2.00, 220345.00, 48, 'current settlement account'),
+       (5, UUID_TO_BIN('2e372c05-46c9-46b4-990d-9db632bbddbc'), 1, 7.00, 5076.00, 12, 'fast cash loan'),
+       (6, UUID_TO_BIN('6f39663f-4a03-411b-8e17-063c39104738'), 1, 7.00, 18055.00, 12, 'fast cash loan'),
+       (7, UUID_TO_BIN('25e2695a-86b5-4cac-a329-5090151eb34a'), 5, 2.00, 172400.00, 36, 'current settlement account'),
+       (8, UUID_TO_BIN('36350729-583f-4195-bc7f-307ba8ba80cc'), 1, 9.00, 7055.00, 24, 'credit for needs'),
+       (9, UUID_TO_BIN('c815287d-edbc-437a-bb9d-1969056841c6'), 6, 9.00, 355.00, 24, 'credit carts for needs'),
+       (10,UUID_TO_BIN('102c4789-8660-4935-8bad-b631e281a9ae'), 6, 9.00, 482.00, 24, 'credit carts for needs');
+
+INSERT INTO die_bank.transactions (id, debit_account_id, credit_account_id, type, amount, description)
+VALUES (UUID_TO_BIN('42baa5b0-454b-41aa-b5fb-2adf40c04dd1'), UUID_TO_BIN('f1eb4d13-9ed9-4589-947b-8f564067a6d3'), UUID_TO_BIN('102c4789-8660-4935-8bad-b631e281a9ae'),
+                'TRANSFER', 107.45, 'transfer 1'),
+       (UUID_TO_BIN('78df9147-1941-4f2e-b42b-62d235f3b640'), UUID_TO_BIN('f1eb4d13-9ed9-4589-947b-8f564067a6d3'), UUID_TO_BIN('c815287d-edbc-437a-bb9d-1969056841c6'),
+                'TRANSFER', 55.90, 'transfer 2'),
+       (UUID_TO_BIN('20ef04a8-d06b-4847-960e-2e86f836e1a2'), UUID_TO_BIN('cbce97ac-dd09-4cf1-8771-0b767b801740'), UUID_TO_BIN('102c4789-8660-4935-8bad-b631e281a9ae'),
+                'TRANSFER', 83.00, 'transfer 3'),
+       (UUID_TO_BIN('ac99fa67-d957-4d02-8d11-cc7e4f8b8e2e'), UUID_TO_BIN('cbce97ac-dd09-4cf1-8771-0b767b801740'), UUID_TO_BIN('c815287d-edbc-437a-bb9d-1969056841c6'),
+                'TRANSFER', 90.56, 'transfer 4'),
+       (UUID_TO_BIN('42b817f1-9e44-4424-a57c-733fa11dc996'), UUID_TO_BIN('25e2695a-86b5-4cac-a329-5090151eb34a'), UUID_TO_BIN('cbce97ac-dd09-4cf1-8771-0b767b801740'),
+                'TRANSFER', 150.00, 'transfer 5'),
+       (UUID_TO_BIN('7932a84b-b25b-4484-85a1-1fe798643aa8'), UUID_TO_BIN('36350729-583f-4195-bc7f-307ba8ba80cc'), UUID_TO_BIN('cbce97ac-dd09-4cf1-8771-0b767b801740'),
+                'TRANSFER', 5.67, 'transfer 6'),
+       (UUID_TO_BIN('be4153ae-85d3-4327-a138-4489632305b3'), UUID_TO_BIN('f1eb4d13-9ed9-4589-947b-8f564067a6d3'), UUID_TO_BIN('36350729-583f-4195-bc7f-307ba8ba80cc'),
+                'TRANSFER', 7500.00, 'transfer 7'),
+       (UUID_TO_BIN('bd04c9eb-0085-4c67-bbc8-6a8f8f658ff6'), UUID_TO_BIN('f1eb4d13-9ed9-4589-947b-8f564067a6d3'), UUID_TO_BIN('36350729-583f-4195-bc7f-307ba8ba80cc'),
+                'TRANSFER', 540.00, 'transfer 8'),
+       (UUID_TO_BIN('59381ba7-5d78-458f-8e0a-1eeb12c7f2a3'), UUID_TO_BIN('36350729-583f-4195-bc7f-307ba8ba80cc'), UUID_TO_BIN('f1eb4d13-9ed9-4589-947b-8f564067a6d3'),
+                'TRANSFER', 540.00, 'transfer 9'),
+       (UUID_TO_BIN('d8f16be8-566c-4ef8-861f-0cd91db678ce'), UUID_TO_BIN('6f39663f-4a03-411b-8e17-063c39104738'), UUID_TO_BIN('102c4789-8660-4935-8bad-b631e281a9ae'),
+                'TRANSFER', 124.00, 'transfer 10');
