@@ -44,3 +44,26 @@ VALUES (UUID_TO_BIN('7e78faba-3e6a-4e6c-9e12-b6054a9cd2b2'), 'Lukas', 'Skyhammer
                 'Behrenstraße 135, 10117 Berlin', '+789123678', 'GERMANY', '2023-10-09 13:57:40', '2023-10-09 13:57:40', false),
        (UUID_TO_BIN('daf07ca2-7e65-4fbf-aac4-fc3f08cd526e'), 'Friz', 'Shlag', '517-59835-247', '530', 'frizshlag@exempl.com',
                 'Fischerinsel 38, 10117 Berlin', '+789900547', 'GERMANY', '2023-10-12 13:57:40', '2023-10-12 13:57:40', false);
+
+
+INSERT INTO die_bank.accounts (id, client_id, main_manager_id, assistant_manager_id, account_number, type, balance, currency_code)
+VALUES (UUID_TO_BIN('24b33ca1-9e86-420a-bec5-746236e105e1'), UUID_TO_BIN('7e78faba-3e6a-4e6c-9e12-b6054a9cd2b2'), UUID_TO_BIN('1976ecd1-6f3a-478d-a1b3-a260cd829b9b'),
+                UUID_TO_BIN('9a6dadf0-28e0-41c6-9b8c-6e024ee9b227'),'AYB00012345', 'CREDIT', 125000.00, 'EUR'),
+        (UUID_TO_BIN('cbce97ac-dd09-4cf1-8771-0b767b801740'), UUID_TO_BIN('949aaf01-4f60-4ad9-97bd-70f01d0af833'), UUID_TO_BIN('1976ecd1-6f3a-478d-a1b3-a260cd829b9b'),
+                 null,'AYB00022345', 'DEBIT', 27400.00, 'EUR'),
+        (UUID_TO_BIN('ee34abe1-b6ff-4b00-b2be-dc3c7d2f864d'), UUID_TO_BIN('3403e154-a2ae-44e5-b9a1-f0c7a482adde'), UUID_TO_BIN('1976ecd1-6f3a-478d-a1b3-a260cd829b9b'),
+                 null,'AYB00032345', 'CREDIT', 20700.00, 'EUR'),
+        (UUID_TO_BIN('f1eb4d13-9ed9-4589-947b-8f564067a6d3'), UUID_TO_BIN('0f8a2be4-64fb-4f8c-9002-fbf95f57f1a0'), UUID_TO_BIN('1976ecd1-6f3a-478d-a1b3-a260cd829b9b'),
+                 UUID_TO_BIN('9a6dadf0-28e0-41c6-9b8c-6e024ee9b227'),'AYB00042345', 'DEBIT', 220345.00, 'EUR'),
+        (UUID_TO_BIN('2e372c05-46c9-46b4-990d-9db632bbddbc'), UUID_TO_BIN('f85aa0cf-63e0-4e9c-961b-2eac0974dab2'), UUID_TO_BIN('36a0bc00-a281-47ec-be51-fb6c5eb42d10'),
+                 null,'AYB00052345', 'CREDIT', 5076.00, 'EUR'),
+        (UUID_TO_BIN('6f39663f-4a03-411b-8e17-063c39104738'), UUID_TO_BIN('e95e05f9-b835-4a72-9fab-575d4d32b79b'), UUID_TO_BIN('36a0bc00-a281-47ec-be51-fb6c5eb42d10'),
+                 null,'AYB00062345', 'CREDIT', 18055.00, 'EUR'),
+        (UUID_TO_BIN('25e2695a-86b5-4cac-a329-5090151eb34a'), UUID_TO_BIN('59156a86-404f-4b49-8f81-24e8c9474724'), UUID_TO_BIN('36a0bc00-a281-47ec-be51-fb6c5eb42d10'),
+                 UUID_TO_BIN('de77a6e0-71ef-41ee-a139-24de7f1f3efe'),'AYB00072345', 'DEBIT', 172400.00, 'EUR'),
+        (UUID_TO_BIN('36350729-583f-4195-bc7f-307ba8ba80cc'), UUID_TO_BIN('d5bad0e4-c6bf-4d96-aae7-dcd648b0508a'), UUID_TO_BIN('36a0bc00-a281-47ec-be51-fb6c5eb42d10'),
+                 null,'AYB00082345', 'CREDIT', 7055.00, 'EUR'),
+        (UUID_TO_BIN('c815287d-edbc-437a-bb9d-1969056841c6'), UUID_TO_BIN('50f3d138-c2f5-426f-a695-e86d5acc5fc1'), UUID_TO_BIN('cc4b231b-baf5-47b1-a0d1-380419b95729'),
+                 null,'AYB00092345', 'OTHER', 355.00, 'EUR'),
+        (UUID_TO_BIN('102c4789-8660-4935-8bad-b631e281a9ae'), UUID_TO_BIN('daf07ca2-7e65-4fbf-aac4-fc3f08cd526e'), UUID_TO_BIN('cc4b231b-baf5-47b1-a0d1-380419b95729'),
+                 null,'AYB00102345', 'OTHER', 482.00, 'EUR');

@@ -2,6 +2,7 @@ package de.YefrAlex.BankAppProject.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import de.YefrAlex.BankAppProject.entity.enums.AccountType;
 import de.YefrAlex.BankAppProject.entity.enums.CurrencyCode;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -53,8 +54,9 @@ public class Account {
     private String accountNumber;
 
     @NotNull(message = "type cant be empty")
+    @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    private Integer type;
+    private AccountType type;
 
     @Column(name = "balance", precision = 2)
     private BigDecimal balance;
