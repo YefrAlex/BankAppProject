@@ -1,0 +1,46 @@
+--liquibase formatted sql
+--changeset bank:v.0.1.0-test-data
+
+INSERT INTO die_bank.employees (id, first_name, last_name, role, email, phone, country, created_at, updated_at, is_blocked)
+VALUES (UUID_TO_BIN('16200224-69e6-482b-a988-e0778ffd831e'), 'John', 'Deer', 'ADMIN', 'johndeer@exempl.com', '+77788999',
+        'GERMANY', '2023-09-01 13:57:40', '2023-09-01 13:57:40', false),
+       (UUID_TO_BIN('1976ecd1-6f3a-478d-a1b3-a260cd829b9b'), 'Alice', 'Coolidge','MANAGER', 'alicecoolidge@exempl.com', '+77788999',
+        'GERMANY', '2023-09-02 13:57:40', '2023-09-02 13:57:40', false),
+       (UUID_TO_BIN('990e37d2-10a8-4a3b-a2c4-a5727d2cd465'), 'Sid', 'Johnson','MANAGER', 'sidjohnson@exempl.com', '+777112234',
+        'GERMANY', '2023-09-03 13:57:40', '2023-09-03 13:57:40',false),
+       (UUID_TO_BIN('9a6dadf0-28e0-41c6-9b8c-6e024ee9b227'), 'Emily', 'Blascovich','MANAGER', 'emelyblascovich@exempl.com', '+345112244',
+        'LUXEMBOURG', '2023-09-04 13:57:40', '2023-09-04 13:57:40',false),
+       (UUID_TO_BIN('36a0bc00-a281-47ec-be51-fb6c5eb42d10'), 'David', 'Goliafet','MANAGER', 'davidgoliafet@exempl.com', '+779887655',
+        'GERMANY', '2023-09-05 13:57:40', '2023-09-05 13:57:40', false),
+       (UUID_TO_BIN('2f889448-82ce-4f46-a130-1ebc3c136837'), 'Sarah', 'Condor','MANAGER', 'sarahcondor@exempl.com', '+877655634',
+        'NETHERLANDS', '2023-09-06 13:57:40', '2023-09-06 13:57:40', false),
+       (UUID_TO_BIN('cc4b231b-baf5-47b1-a0d1-380419b95729'), 'James', 'Wilkinson','MANAGER', 'jameswilkinson@exempl.com', '+221121876',
+        'SWITZERLAND', '2023-09-07 13:57:40', '2023-09-07 13:57:40',false),
+       (UUID_TO_BIN('de77a6e0-71ef-41ee-a139-24de7f1f3efe'), 'Olivia', 'Wayet','MANAGER', 'oliviawayet@exempl.com', '+777761232',
+        'GERMANY', '2023-09-08 13:57:40', '2023-09-08 13:57:40', false),
+       (UUID_TO_BIN('08d4a869-e90d-48a4-a98d-f622400fa99b'), 'Klifford', 'Joneson','MANAGER', 'kliffordjohnson@exempl.com', '+7771111211',
+        'GERMANY', '2023-09-09 13:57:40', '2023-09-09 13:57:40', true),
+       (UUID_TO_BIN('3b67ae93-65fb-42ea-be66-e8c2b7d44eb7'), 'Evelin', 'Whiterose','MANAGER', 'evelinewhiterose@exempl.com', '+777345345',
+        'GERMANY', '2023-09-11 13:57:40', '2023-09-11 13:57:40', true);
+
+INSERT INTO die_bank.clients (id, first_name, last_name, tax_code, credit_rating, email, address, phone, country, created_at, updated_at, is_blocked)
+VALUES (UUID_TO_BIN('7e78faba-3e6a-4e6c-9e12-b6054a9cd2b2'), 'Lukas', 'Skyhammer', '123-34234-123', '250', 'lukasskyhammer@exempl.com',
+                'Unter den Linden 54, 10117 Berlin', '+789345345', 'GERMANY', '2023-10-01 13:57:40', '2023-10-01 13:57:40', false),
+       (UUID_TO_BIN('949aaf01-4f60-4ad9-97bd-70f01d0af833'), 'Weider', 'FonDart', '123-12123-123', '290', 'weiderfondart@exempl.com',
+                'Bismark platz 12, 80331 München', '+789897789', 'GERMANY', '2023-10-02 13:57:40', '2023-10-02 13:57:40', false),
+       (UUID_TO_BIN('3403e154-a2ae-44e5-b9a1-f0c7a482adde'), 'Hans', 'Solod', '123-21312-123', '330', 'hanssolod@exempl.com',
+                'Kurfürstendamm 216, 10719 Berlin', '+789321321', 'GERMANY', '2023-10-03 13:57:40', '2023-10-03 13:57:40', false),
+       (UUID_TO_BIN('0f8a2be4-64fb-4f8c-9002-fbf95f57f1a0'), 'Lea', 'Zimerman', '123-22433-123', '370', 'leazimerman@exempl.com',
+                'Heerstraße 12, 14052 Berlin', '+789443321', 'GERMANY', '2023-10-04 13:57:40', '2023-10-04 13:57:40', false),
+       (UUID_TO_BIN('f85aa0cf-63e0-4e9c-961b-2eac0974dab2'), 'Obilon', 'Kenobish', '234-22433-123', '410', 'obilonkenobish@exempl.com',
+                'Schlossplatz 1, 70173 Stuttgart', '+789554432', 'GERMANY', '2023-10-05 13:57:40', '2023-10-05 13:57:40', false),
+       (UUID_TO_BIN('e95e05f9-b835-4a72-9fab-575d4d32b79b'), 'Gustav', 'Bolenbrok', '345-22433-333', '450', 'gustavbolenbrok@exempl.com',
+                'Friedrichstraße 96, 10117 Berlin', '+789665543', 'GERMANY', '2023-10-06 13:57:40', '2023-10-06 13:57:40', false),
+       (UUID_TO_BIN('59156a86-404f-4b49-8f81-24e8c9474724'), 'Otto', 'Stirliz', '345-89433-333', '490', 'ottostirliz@exempl.com',
+                'Niederkirchnerstraße 8, 10117 Berlin', '+789776654', 'GERMANY', '2023-10-07 13:57:40', '2023-10-07 13:57:40', false),
+       (UUID_TO_BIN('d5bad0e4-c6bf-4d96-aae7-dcd648b0508a'), 'Urgen', 'Rolf', '312-22567-333', '505', 'urgenrolf@exempl.com',
+                'Waisenstrasse 14, 10117 Berlin', '+789545432', 'GERMANY', '2023-10-08 13:57:40', '2023-10-08 13:57:40', false),
+       (UUID_TO_BIN('50f3d138-c2f5-426f-a695-e86d5acc5fc1'), 'Kurt', 'Aisman', '387-54367-333', '510', 'kurtaisman@exempl.com',
+                'Behrenstraße 135, 10117 Berlin', '+789123678', 'GERMANY', '2023-10-09 13:57:40', '2023-10-09 13:57:40', false),
+       (UUID_TO_BIN('daf07ca2-7e65-4fbf-aac4-fc3f08cd526e'), 'Friz', 'Shlag', '517-59835-247', '530', 'frizshlag@exempl.com',
+                'Fischerinsel 38, 10117 Berlin', '+789900547', 'GERMANY', '2023-10-12 13:57:40', '2023-10-12 13:57:40', false);
