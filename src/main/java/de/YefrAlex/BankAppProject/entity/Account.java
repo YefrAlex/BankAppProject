@@ -62,6 +62,7 @@ public class Account {
     private BigDecimal balance;
 
     @NotNull(message = "Currency code cant be empty")
+    @Enumerated(EnumType.STRING)
     @Column(name = "currency_code")
     private CurrencyCode currencyCode;
 
@@ -70,8 +71,8 @@ public class Account {
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(name = "update_at")
-    private LocalDateTime updateAt;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     @Column(name = "is_blocked", nullable = false)
     private boolean isBlocked;
@@ -102,7 +103,7 @@ public class Account {
                     ", balance=" + balance +
                     ", currencyCode=" + currencyCode +
                     ", createdAt=" + createdAt +
-                    ", updateAt=" + updateAt +
+                    ", updatedAt=" + updatedAt +
                     ", isBlocked=" + isBlocked +
                     '}';
         } else
@@ -115,7 +116,7 @@ public class Account {
                     ", balance=" + balance +
                     ", currencyCode=" + currencyCode +
                     ", createdAt=" + createdAt +
-                    ", updateAt=" + updateAt +
+                    ", updatedAt=" + updatedAt +
                     ", isBlocked=" + isBlocked +
                     '}';
     }

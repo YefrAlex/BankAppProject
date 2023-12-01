@@ -43,7 +43,7 @@ create table if not exists die_bank.accounts
     account_number          varchar(20) not null,
     type                    varchar(10)      not null,
     balance                 decimal(15, 2)       DEFAULT 0 not null,
-    currency_code           varchar(3)  not null,
+    currency_code           varchar(5)  not null,
     created_at              timestamp   DEFAULT CURRENT_TIMESTAMP,
     updated_at              timestamp   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     is_blocked              boolean     not null default false,

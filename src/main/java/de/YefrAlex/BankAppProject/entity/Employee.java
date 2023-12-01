@@ -61,8 +61,8 @@ public class Employee {
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(name = "update_at")
-    private LocalDateTime updateAt;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     @Column(name = "is_blocked", nullable = false)
     private boolean isBlocked;
@@ -101,7 +101,7 @@ public class Employee {
                 ", phone='" + phone + '\'' +
                 ", country=" + country +
                 ", createdAt=" + createdAt +
-                ", updateAt=" + updateAt +
+                ", updateAt=" + updatedAt +
                 ", isBlocked=" + isBlocked +
                 '}';
     }
