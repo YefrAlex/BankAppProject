@@ -1,13 +1,14 @@
 package de.YefrAlex.BankAppProject.service;
 
-import de.YefrAlex.BankAppProject.repository.ProductRepository;
-import org.springframework.stereotype.Service;
+import de.YefrAlex.BankAppProject.dto.ProductDto;
+import de.YefrAlex.BankAppProject.entity.enums.ProductType;
 
-@Service
-public class ProductService {
-    private final ProductRepository productRepository;
+import java.util.List;
 
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository=productRepository;
-    }
+public interface ProductService {
+    List<ProductDto> getAllActiveProductsDto();
+
+    List<ProductDto> getActiveProductsWithType(ProductType productType);
+
+    ProductDto getProductDtoById (Long id);
 }

@@ -1,6 +1,7 @@
 package de.YefrAlex.BankAppProject.entity;
 
 import de.YefrAlex.BankAppProject.entity.enums.CurrencyCode;
+import de.YefrAlex.BankAppProject.entity.enums.ProductType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -24,9 +25,11 @@ public class Product {
     @Column(name = "id",updatable = false)
     private Long id;
 
-    @Column(name = "product_typ", nullable = false, unique = true)
-    private String productTyp;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "product_typ", nullable = false)
+    private ProductType productType;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "currency_code", nullable = false)
     private CurrencyCode currencyCode;
 
@@ -48,7 +51,7 @@ public class Product {
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(name = "update_at")
+    @Column(name = "updated_at")
     private LocalDateTime updateAt;
 
     @Column(name = "is_blocked", nullable = false)
@@ -58,19 +61,19 @@ public class Product {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Product product)) return false;
-        return Objects.equals(id, product.id) && Objects.equals(productTyp, product.productTyp);
+        return Objects.equals(id, product.id) && Objects.equals(productType, product.productType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, productTyp);
+        return Objects.hash(id, productType);
     }
 
     @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
-                ", productTyp='" + productTyp + '\'' +
+                ", productTyp='" + productType + '\'' +
                 ", currencyCode=" + currencyCode +
                 ", interestRate=" + interestRate +
                 ", limit=" + limit +

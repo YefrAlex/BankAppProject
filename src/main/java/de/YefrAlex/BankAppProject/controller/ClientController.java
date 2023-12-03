@@ -36,4 +36,6 @@ public class ClientController  {
     public ResponseEntity<List<ClientFullInfoDto>> findAllFullInfo() {
         return ResponseEntity.ok(clientService.findAllFullInfo());
     }
+
+
 }
