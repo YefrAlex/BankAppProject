@@ -5,7 +5,6 @@ import de.YefrAlex.BankAppProject.dto.ClientShortDto;
 import de.YefrAlex.BankAppProject.entity.Client;
 import de.YefrAlex.BankAppProject.mapper.ClientMapper;
 import de.YefrAlex.BankAppProject.repository.ClientRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
 
