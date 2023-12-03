@@ -1,5 +1,6 @@
 package de.YefrAlex.BankAppProject.controller;
 
+import de.YefrAlex.BankAppProject.dto.AccountForClientDto;
 import de.YefrAlex.BankAppProject.entity.Account;
 import de.YefrAlex.BankAppProject.service.AccountService;
 import org.springframework.http.ResponseEntity;
@@ -21,5 +22,10 @@ public class AccountController {
     public ResponseEntity<List<Account>> getAll(){
         List<Account> allAccounts = accountService.findAll();
         return ResponseEntity.ok(allAccounts);
+    }
+    @GetMapping("/allaccount")
+    public ResponseEntity<List<AccountForClientDto>> getAllClientsAccount () {
+        List<AccountForClientDto> allClientsAccounts = accountService.findAllClientsAccount();
+        return ResponseEntity.ok(allClientsAccounts);
     }
 }

@@ -11,9 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
@@ -29,11 +27,11 @@ public class Employee {
     private UUID id;
 
     @Column(name = "first_name")
-    @Pattern(regexp = "[A-Z][a-z]{1,}", message = "a string should start with a capital letter (other lowercase) and contain at least two letters")
+    @Pattern(regexp = "[A-Z][a-z]{1,49}", message = "a string should start with a capital letter (other lowercase) and contain at least two letters")
     private String firstName;
 
     @Column(name = "last_name")
-    @Pattern(regexp = "[A-Z][a-z]{1,}", message = "a string should start with a capital letter (other lowercase) and contain at least two letters")
+    @Pattern(regexp = "[A-Z][a-z]{1,49}", message = "a string should start with a capital letter (other lowercase) and contain at least two letters")
     private String lastName;
 
     @Enumerated(EnumType.STRING)
@@ -70,12 +68,12 @@ public class Employee {
     @OneToMany(mappedBy = "mainManagerId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private List<Account> mainManagerAccounts;
+    private Set<Account> mainManagerAccounts = new HashSet<>();
 
     @OneToMany(mappedBy = "assistantManagerId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private List<Account> assistantManagerAccounts;
+    private Set<Account> assistantManagerAccounts = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

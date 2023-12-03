@@ -9,9 +9,7 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.annotations.*;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 
 @Getter
@@ -29,12 +27,12 @@ public class Client {
 
 
     @Column(name = "first_name")
-    @Pattern(regexp = "[A-Z][a-z]{1,}", message = "a string should start with a capital letter (other lowercase) and contain at least two letters")
+    @Pattern(regexp = "[A-Z][a-z]{1,49}", message = "a string should start with a capital letter (rest lowercase) and contain at least two letters")
     private String firstName;
 
 
     @Column(name = "last_name")
-    @Pattern(regexp = "[A-Z][a-z]{1,}", message = "a string should start with a capital letter (other lowercase) and contain at least two letters")
+    @Pattern(regexp = "[A-Z][a-z]{1,49}", message = "a string should start with a capital letter (rest lowercase) and contain at least two letters")
     private String lastName;
 
     @NotBlank(message = "Tax Code cant be empty")
@@ -79,7 +77,11 @@ public class Client {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private List<Account> accounts;
+    private Set<Account> accounts = new HashSet<>();
+
+    public Set<Account> getAccounts() {
+        return accounts;
+    }
 
     @Override
     public boolean equals(Object o) {
