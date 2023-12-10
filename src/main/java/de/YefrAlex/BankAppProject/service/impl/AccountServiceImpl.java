@@ -1,21 +1,22 @@
-package de.YefrAlex.BankAppProject.service;
+package de.YefrAlex.BankAppProject.service.impl;
 
 import de.YefrAlex.BankAppProject.dto.AccountForClientDto;
 import de.YefrAlex.BankAppProject.entity.Account;
 import de.YefrAlex.BankAppProject.mapper.AccountMapper;
 import de.YefrAlex.BankAppProject.repository.AccountRepository;
+import de.YefrAlex.BankAppProject.service.AccountService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class AccountService {
+public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
 
-    public AccountService(AccountRepository accountRepository, AccountMapper accountMapper) {
+    public AccountServiceImpl(AccountRepository accountRepository, AccountMapper accountMapper) {
         this.accountRepository=accountRepository;
         this.accountMapper=accountMapper;
     }

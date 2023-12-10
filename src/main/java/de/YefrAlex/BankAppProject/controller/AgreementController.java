@@ -1,6 +1,6 @@
 package de.YefrAlex.BankAppProject.controller;
 
-import de.YefrAlex.BankAppProject.service.AgreementService;
+import de.YefrAlex.BankAppProject.service.impl.AgreementServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/agreement")
 public class AgreementController {
 
-    private final AgreementService agreementService;
+    private final AgreementServiceImpl agreementService;
 
-    public AgreementController(AgreementService agreementService) {
+    public AgreementController(AgreementServiceImpl agreementService) {
         this.agreementService=agreementService;
     }
 }

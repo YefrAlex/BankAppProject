@@ -59,7 +59,6 @@ public class Client {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "country")
-    @NotBlank
     private Country country;
 
     @CreationTimestamp

@@ -36,7 +36,6 @@ public class Employee {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    @NotBlank
     private Role role;
 
     @NotEmpty(message = "Email cant be empty")
@@ -51,7 +50,6 @@ public class Employee {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "country")
-    @NotBlank
     private Country country;
 
     @CreationTimestamp

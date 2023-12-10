@@ -1,15 +1,16 @@
 package de.YefrAlex.BankAppProject.dto;
 
-import de.YefrAlex.BankAppProject.entity.enums.CurrencyCode;
-import de.YefrAlex.BankAppProject.mapper.AccountMapper;
+
+import com.fasterxml.jackson.annotation.*;
+import de.YefrAlex.BankAppProject.entity.enums.Country;
+
 import lombok.*;
 
-import java.math.BigDecimal;
+
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+
 
 @Getter
 @Setter
@@ -21,7 +22,12 @@ public class ClientFullInfoDto {
     String email;
     String address;
     String phone;
+    Country country;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     LocalDateTime createdAt;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    LocalDateTime updatedAt;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     List<AccountForClientDto> accounts;
 
 }

@@ -1,8 +1,10 @@
-package de.YefrAlex.BankAppProject.service;
+package de.YefrAlex.BankAppProject.service.impl;
 
 import de.YefrAlex.BankAppProject.dto.ClientFullInfoDto;
 import de.YefrAlex.BankAppProject.dto.ClientShortDto;
 import de.YefrAlex.BankAppProject.entity.Client;
+import de.YefrAlex.BankAppProject.entity.Product;
+import de.YefrAlex.BankAppProject.entity.enums.Country;
 import de.YefrAlex.BankAppProject.mapper.ClientMapper;
 import de.YefrAlex.BankAppProject.repository.ClientRepository;
 import org.springframework.expression.ExpressionException;
@@ -13,11 +15,11 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class ClientService {
+public class ClientServiceImpl {
     private final ClientRepository clientRepository;
     private final ClientMapper clientMapper;
 
-    public ClientService(ClientRepository clientRepository, ClientMapper clientMapper) {
+    public ClientServiceImpl(ClientRepository clientRepository, ClientMapper clientMapper) {
         this.clientRepository=clientRepository;
         this.clientMapper=clientMapper;
     }
@@ -51,5 +53,16 @@ public class ClientService {
         return allClients.stream()
                 .map(clientMapper::toClientFullInfoDto)
                 .collect(Collectors.toList());
+    }
+
+    public void updateClient(String taxCode, String firstName, String lastName, String email, String address, String phone, Country country) {
+        clientRepository.updateClient(taxCode, firstName, lastName, email, address, phone, country);
+    }
+
+    public Client createNewClient(ClientFullInfoDto clientFullInfoDto) {
+        Client client = clientMapper.toClient(clientFullInfoDto);
+        client.setId(null);
+        client.setCreditRating(0);
+        return clientRepository.save(client);
     }
 }

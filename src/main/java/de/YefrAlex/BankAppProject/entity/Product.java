@@ -40,7 +40,7 @@ public class Product {
     private BigDecimal limit;
 
     @Column(name = "limit_duration", nullable = false)
-    private int limitDuration;
+    private Integer limitDuration;
 
     @Column(name = "description")
     @Size(max = 255, message = "Max size for description is 255 characters")

@@ -2,7 +2,7 @@ package de.YefrAlex.BankAppProject.controller;
 
 import de.YefrAlex.BankAppProject.dto.AccountForClientDto;
 import de.YefrAlex.BankAppProject.entity.Account;
-import de.YefrAlex.BankAppProject.service.AccountService;
+import de.YefrAlex.BankAppProject.service.impl.AccountServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +12,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/account")
 public class AccountController {
-    private final AccountService accountService;
+    private final AccountServiceImpl accountService;
 
-    public AccountController(AccountService accountService) {
+    public AccountController(AccountServiceImpl accountService) {
         this.accountService=accountService;
     }
 

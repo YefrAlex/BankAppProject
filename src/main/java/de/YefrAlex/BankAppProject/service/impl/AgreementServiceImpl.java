@@ -1,15 +1,15 @@
-package de.YefrAlex.BankAppProject.service;
+package de.YefrAlex.BankAppProject.service.impl;
 
 import de.YefrAlex.BankAppProject.repository.AgreementRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AgreementService {
+public class AgreementServiceImpl {
 
     private final AgreementRepository agreementRepository;
 
 
-    public AgreementService(AgreementRepository agreementRepository) {
+    public AgreementServiceImpl(AgreementRepository agreementRepository) {
         this.agreementRepository=agreementRepository;
     }
 }

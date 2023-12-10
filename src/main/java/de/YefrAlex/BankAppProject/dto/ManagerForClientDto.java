@@ -9,9 +9,6 @@ import java.util.Objects;
 public class ManagerForClientDto {
     String firstName;
     String lastName;
-    //String fullName;
     String email;
     String phone;
-
-
 }
