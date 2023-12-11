@@ -18,6 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "transactions")
+
 public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

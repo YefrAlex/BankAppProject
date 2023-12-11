@@ -1,9 +1,7 @@
 package de.YefrAlex.BankAppProject.mapper;
 
 import de.YefrAlex.BankAppProject.dto.AccountForClientDto;
-import de.YefrAlex.BankAppProject.dto.ManagerForClientDto;
 import de.YefrAlex.BankAppProject.entity.Account;
-import de.YefrAlex.BankAppProject.entity.Employee;
 import org.mapstruct.*;
 
 

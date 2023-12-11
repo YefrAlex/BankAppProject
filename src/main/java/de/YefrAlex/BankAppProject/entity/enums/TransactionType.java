@@ -5,4 +5,9 @@ public enum TransactionType {
     PAYMENT,
     WITHDRAW,
     DEPOSIT;
+
+    @Override
+    public String toString() {
+        return "TransactionType{}";
+    }
 }

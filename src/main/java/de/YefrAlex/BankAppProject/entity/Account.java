@@ -15,7 +15,9 @@ import org.hibernate.annotations.UuidGenerator;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -76,6 +78,20 @@ public class Account {
 
     @Column(name = "is_blocked", nullable = false)
     private boolean isBlocked;
+
+    @OneToMany(
+            mappedBy = "debitAccountId",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private Set<Transaction> debitTransactions = new HashSet<>();
+
+    @OneToMany(
+            mappedBy = "creditAccountId",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private Set<Transaction> creditTransactions = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
