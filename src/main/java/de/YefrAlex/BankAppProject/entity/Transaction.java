@@ -1,6 +1,7 @@
 package de.YefrAlex.BankAppProject.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import de.YefrAlex.BankAppProject.entity.enums.TransactionType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -18,7 +19,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "transactions")
-
 public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -28,11 +28,13 @@ public class Transaction {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonManagedReference
     @JoinColumn(name = "debit_account_id", referencedColumnName = "id", nullable = false, updatable = false)
     private Account debitAccountId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonManagedReference
     @JoinColumn(name = "credit_account_id", referencedColumnName = "id", nullable = false, updatable = false)
     private Account creditAccountId;
     @Enumerated(EnumType.STRING)

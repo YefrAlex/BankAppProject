@@ -1,6 +1,8 @@
 package de.YefrAlex.BankAppProject.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import de.YefrAlex.BankAppProject.entity.enums.AccountType;
 import de.YefrAlex.BankAppProject.entity.enums.CurrencyCode;
@@ -36,7 +38,7 @@ public class Account {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @JoinColumn(name = "client_id", referencedColumnName = "id", updatable = false, nullable = false)
+    @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
     private Client clientId;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -84,6 +86,7 @@ public class Account {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
+    @JsonBackReference
     private Set<Transaction> debitTransactions = new HashSet<>();
 
     @OneToMany(
@@ -91,6 +94,7 @@ public class Account {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
+    @JsonBackReference
     private Set<Transaction> creditTransactions = new HashSet<>();
 
     @Override

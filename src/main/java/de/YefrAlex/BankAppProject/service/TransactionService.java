@@ -12,7 +12,7 @@ public interface TransactionService {
     List<TransactionDto> getAllTransactionsOfAccount(String accountNumber);
     List<TransactionDto> getAllTransactionsOfTaxCode(String taxCode);
 
-    void createTransaction(TransactionDto transactionDto);
+    Transaction createTransaction(TransactionDto transactionDto);
 
 
 }

@@ -1,8 +1,10 @@
 package de.YefrAlex.BankAppProject.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import de.YefrAlex.BankAppProject.entity.enums.Country;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Table;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -72,15 +74,14 @@ public class Client {
     @Column(name = "is_blocked", nullable = false)
     private boolean isBlocked;
 
-    @OneToMany(mappedBy = "clientId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "clientId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Set<Account> accounts = new HashSet<>();
 
-    public Set<Account> getAccounts() {
-        return accounts;
-    }
+
+
 
     @Override
     public boolean equals(Object o) {
