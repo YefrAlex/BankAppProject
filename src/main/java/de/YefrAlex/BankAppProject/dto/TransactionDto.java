@@ -1,11 +1,11 @@
 package de.YefrAlex.BankAppProject.dto;
 
-import de.YefrAlex.BankAppProject.entity.enums.CurrencyCode;
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import de.YefrAlex.BankAppProject.entity.enums.TransactionType;
+import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -15,8 +15,10 @@ public class TransactionDto {
         private String debitAccountNumber;
         private String creditAccountNumber;
         private BigDecimal amount;
-        private String type;
+        private TransactionType type;
+        @JsonInclude(JsonInclude.Include.NON_NULL)
         private String description;
+        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         private Date createdAt;
 
 }

@@ -7,6 +7,7 @@ import de.YefrAlex.BankAppProject.repository.AccountRepository;
 import de.YefrAlex.BankAppProject.service.AccountService;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.login.AccountNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,5 +33,10 @@ public class AccountServiceImpl implements AccountService {
                 .map(accountMapper::toAccountForClientDto)
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public Account getAccountByNumber(String accountNumber) {
+        return accountRepository.getByNumber(accountNumber);
     }
 }

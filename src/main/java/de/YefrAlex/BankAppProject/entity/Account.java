@@ -1,6 +1,7 @@
 package de.YefrAlex.BankAppProject.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import de.YefrAlex.BankAppProject.entity.enums.AccountType;
 import de.YefrAlex.BankAppProject.entity.enums.CurrencyCode;

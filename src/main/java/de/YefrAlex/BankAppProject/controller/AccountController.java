@@ -28,4 +28,9 @@ public class AccountController {
         List<AccountForClientDto> allClientsAccounts = accountService.findAllClientsAccount();
         return ResponseEntity.ok(allClientsAccounts);
     }
+    @GetMapping("/number")
+    Account getAccountByNumber(String accountNumber){
+
+                return accountService.getAccountByNumber(accountNumber);
+    }
 }

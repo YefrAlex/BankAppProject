@@ -11,4 +11,6 @@ public interface AccountService {
       List<Account> findAll ();
 
       List<AccountForClientDto> findAllClientsAccount();
+
+    Account getAccountByNumber(String accountNumber);
 }

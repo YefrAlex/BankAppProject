@@ -1,5 +1,6 @@
 package de.YefrAlex.BankAppProject.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import de.YefrAlex.BankAppProject.entity.enums.Country;
@@ -78,6 +79,7 @@ public class Client {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Set<Account> accounts = new HashSet<>();
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     public Set<Account> getAccounts() {
         return accounts;
     }
