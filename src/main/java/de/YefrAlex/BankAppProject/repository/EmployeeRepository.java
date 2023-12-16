@@ -1,5 +1,7 @@
 package de.YefrAlex.BankAppProject.repository;
 
+import de.YefrAlex.BankAppProject.dto.EmployeeDto;
+import de.YefrAlex.BankAppProject.entity.Client;
 import de.YefrAlex.BankAppProject.entity.Employee;
 import de.YefrAlex.BankAppProject.entity.enums.Country;
 import de.YefrAlex.BankAppProject.entity.enums.Role;
@@ -10,10 +12,21 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
+
+    @Query("select e from Employee e where e.email = ?1")
+    Employee findEmployeeByEmail (String email);
+
+    @Query("select e from Employee e where e.firstName = ?1 AND e.lastName = ?2")
+    Employee findEmployeeByName(String firstName, String lastName);
+
+    @Query("select e from Employee e where e.role = ?1")
+    List<Employee> getAllByRole(Role role);
+
     @Transactional
     @Modifying
     @Query("UPDATE Employee e " +
@@ -31,4 +44,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
                          @Param("email") String email,
                          @Param("phone") String phone,
                          @Param("country") Country country);
+
+
+
 }

@@ -40,7 +40,7 @@ public class ClientServiceImpl {
         return  clientMapper.toClientShortDto(client);
     }
     public ClientShortDto findClientByTaxCode (String taxCode) {
-        Client client = clientRepository.findAll().stream().filter(cl->(taxCode).equals(cl.getTaxCode())).findFirst().orElseThrow(() -> new ExpressionException("User not found with taxcode " + taxCode));
+        Client client = clientRepository.findClientByTaxCode(taxCode); //orElseThrow(() -> new ExpressionException("User not found with taxcode " + taxCode));
         return  clientMapper.toClientShortDto(client);
     }
     public ClientShortDto findClientByEmail (String email) {
@@ -55,8 +55,13 @@ public class ClientServiceImpl {
                 .collect(Collectors.toList());
     }
 
-    public void updateClient(String taxCode, String firstName, String lastName, String email, String address, String phone, Country country) {
-        clientRepository.updateClient(taxCode, firstName, lastName, email, address, phone, country);
+    public void updateClient(String taxCode, String mainManagerId, String assistantManagerId, String email, String address, String phone, Country country,Boolean isBlocked) {
+        if (isBlocked != null){
+            Client client = clientRepository.findClientByTaxCode(taxCode);
+            client.setBlocked(isBlocked);
+            clientRepository.save(client);
+        }
+        clientRepository.updateClient(taxCode, mainManagerId, assistantManagerId, email, address, phone, country);
     }
 
     public Client createNewClient(ClientFullInfoDto clientFullInfoDto) {

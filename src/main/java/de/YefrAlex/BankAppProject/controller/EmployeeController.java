@@ -31,14 +31,11 @@ public class EmployeeController {
     public ResponseEntity<List<EmployeeDto>> findAllShort() {
         return ResponseEntity.ok(employeeService.getAll());
     }
-    @GetMapping("/find/managers")
-    public ResponseEntity<List<EmployeeDto>> findAllManagers() {
-        return ResponseEntity.ok(employeeService.getAllManagers());
+    @GetMapping("/findrole/{role}")
+    public ResponseEntity<List<EmployeeDto>> findAllByRole(@PathVariable(name = "role") Role role) {
+        return ResponseEntity.ok(employeeService.getAllByRole(role));
     }
-    @GetMapping("/find/admins")
-    public ResponseEntity<List<EmployeeDto>> findAllAdmins() {
-        return ResponseEntity.ok(employeeService.getAllAdmins());
-    }
+
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateEmployee(
             @PathVariable(name = "id") UUID id,
@@ -47,8 +44,9 @@ public class EmployeeController {
             @RequestParam(name = "role", required = false) Role role,
             @RequestParam(name = "email", required = false) String email,
             @RequestParam(name = "phone", required = false) String phone,
-            @RequestParam(name = "country", required = false) Country country){
-        employeeService.updateEmployee(firstName, lastName, role, email, phone, country, id);
+            @RequestParam(name = "country", required = false) Country country,
+            @RequestParam(name = "isBlocked", required = false) Boolean isBlocked){
+        employeeService.updateEmployee(firstName, lastName, role, email, phone, country, id, isBlocked);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

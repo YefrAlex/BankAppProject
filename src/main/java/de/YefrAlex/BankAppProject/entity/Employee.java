@@ -1,5 +1,6 @@
 package de.YefrAlex.BankAppProject.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import de.YefrAlex.BankAppProject.entity.enums.Country;
@@ -15,6 +16,7 @@ import java.util.*;
 
 @Getter
 @Setter
+@ToString(exclude= {"mainManagerAccounts","assistantManagerAccounts"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -63,15 +65,19 @@ public class Employee {
     @Column(name = "is_blocked", nullable = false)
     private boolean isBlocked;
 
-    @OneToMany(mappedBy = "mainManagerId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(mappedBy = "mainManagerId", cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "mainManagerId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonBackReference
     private Set<Account> mainManagerAccounts = new HashSet<>();
 
-    @OneToMany(mappedBy = "assistantManagerId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Set<Account> assistantManagerAccounts = new HashSet<>();
+   @OneToMany(mappedBy = "assistantManagerId", cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "assistantManagerId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+   @JsonBackReference
+ private Set<Account> assistantManagerAccounts = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
@@ -86,21 +92,7 @@ public class Employee {
         return Objects.hash(id);
     }
 
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", role=" + role +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", country=" + country +
-                ", createdAt=" + createdAt +
-                ", updateAt=" + updatedAt +
-                ", isBlocked=" + isBlocked +
-                '}';
-    }
+
 }
 
 

@@ -1,15 +1,11 @@
 package de.YefrAlex.BankAppProject.controller;
 
-import de.YefrAlex.BankAppProject.dto.ClientShortDto;
-import de.YefrAlex.BankAppProject.dto.ProductDto;
 import de.YefrAlex.BankAppProject.dto.TransactionDto;
-import de.YefrAlex.BankAppProject.entity.Product;
 import de.YefrAlex.BankAppProject.entity.Transaction;
 import de.YefrAlex.BankAppProject.service.impl.TransactionServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,12 +19,12 @@ public class TransactionController {
         this.transactionService=transactionService;
     }
 
-    @GetMapping("/all/{accountNumber}")
+    @GetMapping("/all/accountNumber/{accountNumber}")
     public ResponseEntity<List<TransactionDto>> getAllTransactionsOfAccount(@PathVariable(name = "accountNumber") String accountNumber) {
         return ResponseEntity.ok(transactionService.getAllTransactionsOfAccount(accountNumber));
     }
 
-    @GetMapping("/allall")
+    @GetMapping("/all")
     public ResponseEntity<List<TransactionDto>> getAllTransactions() {
         return ResponseEntity.ok(transactionService.getAllTransactions());
     }
@@ -46,6 +42,13 @@ public class TransactionController {
     @PostMapping("/addnew")
     public ResponseEntity<UUID> createNewTransaction(@RequestBody TransactionDto transactionDto) {
         Transaction transaction=transactionService.createTransaction(transactionDto);
-        return ResponseEntity.created(URI.create("/" + transaction.getId())).body(transaction.getId());
+        return ResponseEntity.ok(transaction.getId());
     }
+
+    @PostMapping("/revers/{id}")
+    public ResponseEntity<UUID> reversTransaction(@PathVariable(name = "id") String id) {
+        Transaction transaction=transactionService.reversTransaction(id);
+        return ResponseEntity.ok(transaction.getId());
+    }
+
 }

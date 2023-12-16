@@ -1,7 +1,9 @@
 package de.YefrAlex.BankAppProject.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import de.YefrAlex.BankAppProject.entity.enums.AccountType;
 import de.YefrAlex.BankAppProject.entity.enums.CurrencyCode;
 import jakarta.persistence.*;
@@ -13,7 +15,6 @@ import org.hibernate.annotations.UuidGenerator;
 
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
@@ -22,6 +23,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@ToString(exclude={"debitTransactions","creditTransactions"})
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -36,23 +38,26 @@ public class Account {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @JoinColumn(name = "client_id", referencedColumnName = "id", updatable = false, nullable = false)
+    @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
+    @JsonManagedReference
     private Client clientId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "main_manager_id", referencedColumnName = "id", nullable = false)
+    @JsonManagedReference
     private Employee mainManagerId;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "assistant_manager_id", referencedColumnName = "id")
+    @JsonManagedReference
     private Employee assistantManagerId;
 
     @NotEmpty(message = "Account Number cant be empty")
     @Column(name = "account_number")
-    @Size(min = 12, max = 20, message = "Account number must be between 12 and 20 characters long")
+    @Size(min = 2, max = 20, message = "Account number must be between 12 and 20 characters long")
     private String accountNumber;
 
     @NotNull(message = "type cant be empty")
@@ -79,18 +84,11 @@ public class Account {
     @Column(name = "is_blocked", nullable = false)
     private boolean isBlocked;
 
-    @OneToMany(
-            mappedBy = "debitAccountId",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    private Set<Transaction> debitTransactions = new HashSet<>();
 
-    @OneToMany(
-            mappedBy = "creditAccountId",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
+
+    @OneToMany( mappedBy = "debitAccountId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Transaction> debitTransactions = new HashSet<>();
+    @OneToMany( mappedBy = "creditAccountId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Transaction> creditTransactions = new HashSet<>();
 
     @Override
@@ -106,34 +104,5 @@ public class Account {
         return Objects.hash(id);
     }
 
-    @Override
-    public String toString() {
-        if (assistantManagerId != null) {
-            return "Account{" +
-                    "id=" + id +
-                    ", clientId=" + clientId +
-                    ", mainManagerId=" + mainManagerId +
-                    ", assistantManagerId=" + assistantManagerId +
-                    ", accountNumber='" + accountNumber + '\'' +
-                    ", type=" + type +
-                    ", balance=" + balance +
-                    ", currencyCode=" + currencyCode +
-                    ", createdAt=" + createdAt +
-                    ", updatedAt=" + updatedAt +
-                    ", isBlocked=" + isBlocked +
-                    '}';
-        } else
-            return "Account{" +
-                    "id=" + id +
-                    ", clientId=" + clientId +
-                    ", managerId=" + mainManagerId +
-                    ", accountNumber='" + accountNumber + '\'' +
-                    ", type=" + type +
-                    ", balance=" + balance +
-                    ", currencyCode=" + currencyCode +
-                    ", createdAt=" + createdAt +
-                    ", updatedAt=" + updatedAt +
-                    ", isBlocked=" + isBlocked +
-                    '}';
-    }
+
 }

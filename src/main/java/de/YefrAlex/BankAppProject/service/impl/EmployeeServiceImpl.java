@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -29,23 +30,22 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeDto> getAllManagers() {
-        return employeeRepository.findAll().stream().filter(emp -> "MANAGER".equals(emp.getRole().toString())).map(managerMapper::toEmployeeDto).toList();
-    }
-
-    @Override
-    public List<EmployeeDto> getAllAdmins() {
-        return employeeRepository.findAll().stream().filter(emp -> "ADMIN".equals(emp.getRole().toString())).map(managerMapper::toEmployeeDto).toList();
+    public List<EmployeeDto> getAllByRole(Role role) {
+        return employeeRepository.getAllByRole(role).stream().map(managerMapper::toEmployeeDto).collect(Collectors.toList());
     }
 
     @Override
     public EmployeeDto getEmployeeByName(String firstName, String lastName) {
-        return  employeeRepository.findAll().stream().filter(emp -> (firstName.equals(emp.getFirstName()) & lastName.equals(emp.getLastName())))
-                .map(managerMapper::toEmployeeDto).toList().get(0);
+        return  managerMapper.toEmployeeDto(employeeRepository.findEmployeeByName(firstName,lastName));
     }
 
     @Override
-    public void updateEmployee(String firstName, String lastName, Role role, String email, String phone, Country country, UUID id) {
+    public void updateEmployee(String firstName, String lastName, Role role, String email, String phone, Country country, UUID id, Boolean isBlocked) {
+        if (isBlocked != null){
+            Employee employee = employeeRepository.findById(id).get();
+            employee.setBlocked(isBlocked);
+            employeeRepository.save(employee);
+        }
          employeeRepository.updateEmployee(id,firstName, lastName, role, email, phone, country);
     }
 

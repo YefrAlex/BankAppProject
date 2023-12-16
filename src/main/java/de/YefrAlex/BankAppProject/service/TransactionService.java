@@ -14,5 +14,5 @@ public interface TransactionService {
 
     Transaction createTransaction(TransactionDto transactionDto);
 
-
+    Transaction reversTransaction(String id);
 }

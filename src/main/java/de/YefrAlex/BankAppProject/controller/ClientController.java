@@ -52,8 +52,9 @@ public class ClientController  {
             @RequestParam(name = "email", required = false) String email,
             @RequestParam(name = "address", required = false) String address,
             @RequestParam(name = "phone", required = false) String phone,
-            @RequestParam(name = "country", required = false) Country country){
-        clientService.updateClient(taxCode, firstName, lastName, email, address, phone, country);
+            @RequestParam(name = "country", required = false) Country country,
+            @RequestParam(name = "isBlocked", required = false) Boolean isBlocked){
+        clientService.updateClient(taxCode, firstName, lastName, email, address, phone, country, isBlocked);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

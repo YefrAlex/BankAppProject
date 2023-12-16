@@ -12,8 +12,6 @@ public class ClientShortDto {
     String phone;
     int numberOfAccounts;
 
-
-
     public ClientShortDto() {
     }
 

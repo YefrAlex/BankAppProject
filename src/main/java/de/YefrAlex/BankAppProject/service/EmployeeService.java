@@ -10,10 +10,9 @@ import java.util.UUID;
 
 public interface EmployeeService {
     List<EmployeeDto> getAll();
-    List<EmployeeDto> getAllManagers();
-    List<EmployeeDto> getAllAdmins();
+    List<EmployeeDto> getAllByRole(Role role);
     EmployeeDto getEmployeeByName(String firstName, String LastName);
-    void updateEmployee(String firstName, String lastName, Role role, String email, String phone, Country country, UUID id);
+    void updateEmployee(String firstName, String lastName, Role role, String email, String phone, Country country, UUID id, Boolean isBlocked);
     Employee createNewEmployee (EmployeeDto employeeDto);
 
 }

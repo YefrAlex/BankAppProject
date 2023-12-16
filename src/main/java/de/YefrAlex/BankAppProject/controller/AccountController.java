@@ -1,14 +1,19 @@
 package de.YefrAlex.BankAppProject.controller;
 
+
 import de.YefrAlex.BankAppProject.dto.AccountDto;
 import de.YefrAlex.BankAppProject.dto.AccountForClientDto;
 import de.YefrAlex.BankAppProject.entity.Account;
+import de.YefrAlex.BankAppProject.entity.enums.AccountType;
+import de.YefrAlex.BankAppProject.entity.enums.Country;
+import de.YefrAlex.BankAppProject.entity.enums.CurrencyCode;
 import de.YefrAlex.BankAppProject.service.impl.AccountServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.rmi.ServerException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -25,29 +30,45 @@ public class AccountController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Account>> getAll(){
-        List<Account> allAccounts = accountService.findAll();
+    public ResponseEntity<List<AccountDto>> getAll() {
+        List<AccountDto> allAccounts=accountService.findAll();
         return ResponseEntity.ok(allAccounts);
     }
+
     @GetMapping("/allaccount")
-    public ResponseEntity<List<AccountForClientDto>> getAllClientsAccount () {
-        List<AccountForClientDto> allClientsAccounts = accountService.findAllClientsAccount();
+    public ResponseEntity<List<AccountForClientDto>> getAllClientsAccount() {
+        List<AccountForClientDto> allClientsAccounts=accountService.findAllClientsAccount();
         return ResponseEntity.ok(allClientsAccounts);
     }
+
     @GetMapping("/number/{number}")
-    public ResponseEntity<Optional<Account>> getAccountByNumber(@PathVariable(name = "number")String accountNumber){
-        Optional<Account> account = accountService.getAccountByNumber(accountNumber);
-        if (account.isPresent()) return ResponseEntity.ok(account);
-        else throw new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "entity not found"
-        );
+    public ResponseEntity<AccountDto> getAccountByNumber(@PathVariable(name = "number") String accountNumber) {
+        AccountDto account=accountService.getAccountByNumber(accountNumber);
+        return ResponseEntity.ok(account);
+
     }
-    @GetMapping("/{accountId}")
-    public ResponseEntity<Optional<Account>> getAccountById(@PathVariable(name ="accountId") UUID accountId) {
-        Optional<Account> account = accountService.getAccountById(accountId);
-        if (Objects.nonNull(account)) return ResponseEntity.ok(account);
-        else throw new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "entity not found"
-        );
+
+
+    @PostMapping("/newaccount")
+    public ResponseEntity<HttpStatus> createNewAccount(@RequestBody AccountDto accountDto) throws ServerException {
+        Account account=accountService.saveAccount(accountDto);
+        if (account == null) {
+            throw new ServerException("CreatedAccount_Errror");
+        } else {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
     }
+
+    @PutMapping("/update/{number}")
+    public ResponseEntity<String> updateAccount(
+            @PathVariable(name = "number") String accountNumber,
+            @RequestParam(name = "mainManagerEmail", required = false) String mainManagerEmail,
+            @RequestParam(name = "assistantManagerEmail", required = false) String assistantManagerEmail,
+            @RequestParam(name = "type", required = false) AccountType type,
+            @RequestParam(name = "currencyCode", required = false) CurrencyCode currencyCode,
+            @RequestParam(name = "isBlocked", required = false) Boolean isBlocked) {
+        accountService.updateAccount(accountNumber, mainManagerEmail, assistantManagerEmail, type, currencyCode, isBlocked);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

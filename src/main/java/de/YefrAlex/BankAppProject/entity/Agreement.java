@@ -1,5 +1,6 @@
 package de.YefrAlex.BankAppProject.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -27,6 +28,7 @@ public class Agreement {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN)
+    @JsonIgnore
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "account_id", referencedColumnName = "id", updatable = false)
     private Account accountId;
@@ -44,7 +46,7 @@ public class Agreement {
     private BigDecimal amount;
 
     @Column(name = "duration", nullable = false)
-    private int duration;
+    private Integer duration;
 
     @Column(name = "description")
     @Size(max = 255, message = "Max size for description is 255 characters")
@@ -55,11 +57,27 @@ public class Agreement {
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(name = "update_at")
+    @Column(name = "updated_at")
     private LocalDateTime updateAt;
 
     @Column(name = "is_blocked", nullable = false)
-    private boolean isBlocked;
+    private Boolean isBlocked;
+
+    @Override
+    public String toString() {
+        return "Agreement{" +
+                "id=" + id +
+                ", accountId=" + accountId +
+                ", productId=" + productId +
+                ", interestRate=" + interestRate +
+                ", amount=" + amount +
+                ", duration=" + duration +
+                ", description='" + description + '\'' +
+                ", createdAt=" + createdAt +
+                ", updateAt=" + updateAt +
+                ", isBlocked=" + isBlocked +
+                '}';
+    }
 }
 
 /*

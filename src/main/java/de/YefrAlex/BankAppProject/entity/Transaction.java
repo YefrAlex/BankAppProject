@@ -28,15 +28,14 @@ public class Transaction {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @JsonManagedReference
     @JoinColumn(name = "debit_account_id", referencedColumnName = "id", nullable = false, updatable = false)
     private Account debitAccountId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @JsonManagedReference
     @JoinColumn(name = "credit_account_id", referencedColumnName = "id", nullable = false, updatable = false)
     private Account creditAccountId;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
     private TransactionType type;
@@ -73,6 +72,7 @@ public class Transaction {
                 ", type=" + type +
                 ", amount=" + amount +
                 ", description='" + description + '\'' +
+                ", createdAt=" + createdAt +
                 '}';
     }
 }

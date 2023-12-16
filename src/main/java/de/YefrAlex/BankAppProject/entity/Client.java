@@ -1,5 +1,6 @@
 package de.YefrAlex.BankAppProject.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,21 +11,23 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.annotations.*;
+
 import java.time.LocalDateTime;
 import java.util.*;
 
 
 @Getter
 @Setter
+@ToString(exclude="accounts")
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="clients")
+@Table(name = "clients")
 public class Client {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @UuidGenerator(style=UuidGenerator.Style.TIME)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @UuidGenerator(style = UuidGenerator.Style.TIME)
     private UUID id;
 
 
@@ -74,13 +77,13 @@ public class Client {
     @Column(name = "is_blocked", nullable = false)
     private boolean isBlocked;
 
-    @OneToMany(mappedBy = "clientId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(mappedBy = "clientId", cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "clientId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonBackReference
     private Set<Account> accounts = new HashSet<>();
-
-
 
 
     @Override
@@ -96,22 +99,4 @@ public class Client {
         return Objects.hash(id, taxCode, email);
     }
 
-    @Override
-    public String toString() {
-        return "Client{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", taxCode='" + taxCode + '\'' +
-                ", creditRating=" + creditRating +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
-                ", country=" + country +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", isBlocked=" + isBlocked +
-                ", accounts=" + accounts +
-                '}';
-    }
 }
