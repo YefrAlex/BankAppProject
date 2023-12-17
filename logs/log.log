@@ -269,7 +269,7 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
-	at de.YefrAlex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
+	at de.telran_yefralex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
 Caused by: liquibase.exception.ChangeLogParseException: Error parsing classpath:db/changelog/changelog-master.yaml
 	at liquibase.parser.core.yaml.YamlChangeLogParser.parse(YamlChangeLogParser.java:92) ~[liquibase-core-4.20.0.jar:na]
 	at liquibase.Liquibase.getDatabaseChangeLog(Liquibase.java:607) ~[liquibase-core-4.20.0.jar:na]
@@ -739,7 +739,7 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
-	at de.YefrAlex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
+	at de.telran_yefralex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
 Caused by: liquibase.exception.ChangeLogParseException: Error parsing classpath:db/changelog/changelog-master.yaml
 	at liquibase.parser.core.yaml.YamlChangeLogParser.parse(YamlChangeLogParser.java:92) ~[liquibase-core-4.20.0.jar:na]
 	at liquibase.Liquibase.getDatabaseChangeLog(Liquibase.java:607) ~[liquibase-core-4.20.0.jar:na]
@@ -878,7 +878,7 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
-	at de.YefrAlex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
+	at de.telran_yefralex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
 Caused by: liquibase.exception.LiquibaseException: liquibase.exception.MigrationFailedException: Migration failed for changeset db.changelog/v.0.1.0/ddl-0.1.0.sql::v.0.1.0-ddl::elina:
      Reason: liquibase.exception.DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',
     created_at      timestamp    DEFAULT CURRENT_TIMESTAMP,
@@ -1083,7 +1083,7 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
-	at de.YefrAlex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
+	at de.telran_yefralex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
 Caused by: liquibase.exception.LiquibaseException: liquibase.exception.MigrationFailedException: Migration failed for changeset db.changelog/v.0.1.0/ddl-0.1.0.sql::v.0.1.0-ddl::elina:
      Reason: liquibase.exception.DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',
     created_at      timestamp    DEFAULT CURRENT_TIMESTAMP,
@@ -1288,7 +1288,7 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
-	at de.YefrAlex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
+	at de.telran_yefralex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
 Caused by: liquibase.exception.LiquibaseException: liquibase.exception.MigrationFailedException: Migration failed for changeset db.changelog/v.0.1.0/ddl-0.1.0.sql::v.0.1.0-ddl::elina:
      Reason: liquibase.exception.DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',
     created_at      timestamp    DEFAULT CURRENT_TIMESTAMP,
@@ -1677,7 +1677,7 @@ create table if not exists die_bank.payments
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
-	at de.YefrAlex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
+	at de.telran_yefralex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
 Caused by: liquibase.exception.LiquibaseException: liquibase.exception.MigrationFailedException: Migration failed for changeset db.changelog/v.0.1.0/ddl-0.1.0.sql::raw::includeAll:
      Reason: liquibase.exception.DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'create table if not exists die_bank.clients
 (
@@ -2110,7 +2110,7 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
-	at de.YefrAlex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
+	at de.telran_yefralex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
 Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
@@ -2167,7 +2167,7 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
-	at de.YefrAlex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
+	at de.telran_yefralex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
 Caused by: liquibase.exception.DatabaseException: com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
@@ -2499,7 +2499,7 @@ create table if not exists die_bank.payments
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
-	at de.YefrAlex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
+	at de.telran_yefralex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
 Caused by: liquibase.exception.LiquibaseException: liquibase.exception.MigrationFailedException: Migration failed for changeset db.changelog/v.0.1.0/ddl-0.1.0.sql::raw::includeAll:
      Reason: liquibase.exception.DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'create table if not exists die_bank.clients
 (
@@ -3164,7 +3164,7 @@ create table if not exists die_bank.payments
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
-	at de.YefrAlex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
+	at de.telran_yefralex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
 Caused by: liquibase.exception.LiquibaseException: liquibase.exception.MigrationFailedException: Migration failed for changeset db.changelog/v.0.1.0/ddl-0.1.0.sql::raw::includeAll:
      Reason: liquibase.exception.DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'create table if not exists die_bank.clients
 (
@@ -3829,7 +3829,7 @@ create table if not exists die_bank.payments
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
-	at de.YefrAlex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
+	at de.telran_yefralex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
 Caused by: liquibase.exception.LiquibaseException: liquibase.exception.MigrationFailedException: Migration failed for changeset db.changelog/v.0.1.0/ddl-0.1.0.sql::raw::includeAll:
      Reason: liquibase.exception.DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'create table if not exists die_bank.clients
 (
@@ -4494,7 +4494,7 @@ create table if not exists die_bank.payments
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
-	at de.YefrAlex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
+	at de.telran_yefralex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
 Caused by: liquibase.exception.LiquibaseException: liquibase.exception.MigrationFailedException: Migration failed for changeset db.changelog/v.0.1.0/ddl-0.1.0.sql::raw::includeAll:
      Reason: liquibase.exception.DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'create table if not exists die_bank.clients
 (
@@ -5159,7 +5159,7 @@ create table if not exists die_bank.payments
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
-	at de.YefrAlex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
+	at de.telran_yefralex.BankAppProject.BankAppProjectApplication.main(BankAppProjectApplication.java:10) ~[classes/:na]
 Caused by: liquibase.exception.LiquibaseException: liquibase.exception.MigrationFailedException: Migration failed for changeset db.changelog/v.0.1.0/ddl-0.1.0.sql::raw::includeAll:
      Reason: liquibase.exception.DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'create table if not exists die_bank.clients
 (
