@@ -9,6 +9,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Table;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import jdk.jshell.Snippet;
 import lombok.*;
 import org.hibernate.annotations.*;
 
@@ -84,6 +85,8 @@ public class Client {
 //    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonBackReference
     private Set<Account> accounts = new HashSet<>();
+
+
 
 
     @Override

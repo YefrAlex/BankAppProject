@@ -4,6 +4,7 @@ import lombok.*;
 
 @Getter
 @Setter
+@ToString
 public class ClientShortDto {
     String firstName;
     String lastName;
@@ -11,8 +12,4 @@ public class ClientShortDto {
     String email;
     String phone;
     int numberOfAccounts;
-
-    public ClientShortDto() {
-    }
-
 }

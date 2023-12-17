@@ -1,21 +1,23 @@
 package de.YefrAlex.BankAppProject.service.impl;
 
+import de.YefrAlex.BankAppProject.advice.ResponseException;
 import de.YefrAlex.BankAppProject.dto.ClientFullInfoDto;
 import de.YefrAlex.BankAppProject.dto.ClientShortDto;
 import de.YefrAlex.BankAppProject.entity.Client;
-import de.YefrAlex.BankAppProject.entity.Product;
 import de.YefrAlex.BankAppProject.entity.enums.Country;
 import de.YefrAlex.BankAppProject.mapper.ClientMapper;
 import de.YefrAlex.BankAppProject.repository.ClientRepository;
+import de.YefrAlex.BankAppProject.service.ClientService;
 import org.springframework.expression.ExpressionException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class ClientServiceImpl {
+public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
     private final ClientMapper clientMapper;
 
@@ -24,24 +26,29 @@ public class ClientServiceImpl {
         this.clientMapper=clientMapper;
     }
 
-    public List<Client> findAll(){
-        return  clientRepository.findAll();
-    }
 
-    public List<ClientShortDto> findAllShort() {
+
+    public ResponseEntity<List<ClientShortDto>> findAllShort() {
         List<Client> allClients = clientRepository.findAll();
-        return allClients.stream()
+        if (allClients.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<ClientShortDto> DtoList =  allClients.stream()
                 .map(clientMapper::toClientShortDto)
                 .collect(Collectors.toList());
+        return ResponseEntity.ok(DtoList);
     }
 
-    public ClientShortDto findClientById (UUID id) {
-        Client client = clientRepository.findById(id).orElseThrow(() -> new ExpressionException("User not found with id " + id));
-        return  clientMapper.toClientShortDto(client);
-    }
-    public ClientShortDto findClientByTaxCode (String taxCode) {
-        Client client = clientRepository.findClientByTaxCode(taxCode); //orElseThrow(() -> new ExpressionException("User not found with taxcode " + taxCode));
-        return  clientMapper.toClientShortDto(client);
+    public ClientShortDto findClientByTaxCode (String taxCode) throws ResponseException {
+        ClientShortDto clientDto;
+        if (taxCode != null) {
+        Client client = clientRepository.findClientByTaxCode(taxCode);
+        if (client != null ){
+            clientDto = clientMapper.toClientShortDto(client);
+        }else throw new ResponseException("User not found with taxcode " + taxCode);
+        } else throw new ResponseException("Enter taxCode please!");
+
+        return clientDto;
     }
     public ClientShortDto findClientByEmail (String email) {
         Client client = clientRepository.findAll().stream().filter(cl->(email).equals(cl.getEmail())).findFirst().orElseThrow(() -> new ExpressionException("User not found with email " + email));

@@ -18,9 +18,9 @@ public interface ClientMapper {
 
 
     @Mapping( target = "numberOfAccounts", expression = "java(client.getAccounts().size())")
-    ClientShortDto toClientShortDto (Client client);
+    public ClientShortDto toClientShortDto (Client client);
     @Mapping( source = "accounts", target = " accounts")
-    ClientFullInfoDto toClientFullInfoDto (Client client);
+    public ClientFullInfoDto toClientFullInfoDto (Client client);
 
-    Client toClient (ClientFullInfoDto clientFullInfoDto);
+    public Client toClient (ClientFullInfoDto clientFullInfoDto);
 }

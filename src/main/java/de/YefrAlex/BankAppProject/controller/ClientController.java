@@ -1,5 +1,6 @@
 package de.YefrAlex.BankAppProject.controller;
 
+import de.YefrAlex.BankAppProject.advice.ResponseException;
 import de.YefrAlex.BankAppProject.dto.ClientFullInfoDto;
 import de.YefrAlex.BankAppProject.dto.ClientShortDto;
 import de.YefrAlex.BankAppProject.dto.ProductDto;
@@ -17,7 +18,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/client")
-public class ClientController  {
+public class ClientController {
 
     public final ClientServiceImpl clientService;
 
@@ -28,20 +29,22 @@ public class ClientController  {
 
     @GetMapping("/find/all/short")
     public ResponseEntity<List<ClientShortDto>> findAllShort() {
-        return ResponseEntity.ok(clientService.findAllShort());
-    }
-    @GetMapping("/find/taxcode/{taxCode}")
-    public ResponseEntity<ClientShortDto> findByTaxCode(@PathVariable(name = "taxCode") String taxCode) {
-        return ResponseEntity.ok(clientService.findClientByTaxCode(taxCode));
-    }
-    @GetMapping("/find/email/{email}")
-    public ResponseEntity<ClientShortDto> findByEmail(@PathVariable(name = "email") String email) {
-        return ResponseEntity.ok(clientService.findClientByEmail(email));
+        return clientService.findAllShort();
     }
 
     @GetMapping("/find/all/full")
     public ResponseEntity<List<ClientFullInfoDto>> findAllFullInfo() {
         return ResponseEntity.ok(clientService.findAllFullInfo());
+    }
+
+    @GetMapping("/find/taxcode/{taxCode}")
+    public ResponseEntity<ClientShortDto> findByTaxCode(@PathVariable(name = "taxCode") String taxCode) throws ResponseException {
+        return ResponseEntity.ok(clientService.findClientByTaxCode(taxCode));
+    }
+
+    @GetMapping("/find/email/{email}")
+    public ResponseEntity<ClientShortDto> findByEmail(@PathVariable(name = "email") String email) {
+        return ResponseEntity.ok(clientService.findClientByEmail(email));
     }
 
     @PutMapping("/update/{taxCode}")
@@ -53,16 +56,15 @@ public class ClientController  {
             @RequestParam(name = "address", required = false) String address,
             @RequestParam(name = "phone", required = false) String phone,
             @RequestParam(name = "country", required = false) Country country,
-            @RequestParam(name = "isBlocked", required = false) Boolean isBlocked){
+            @RequestParam(name = "isBlocked", required = false) Boolean isBlocked) {
         clientService.updateClient(taxCode, firstName, lastName, email, address, phone, country, isBlocked);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/create")
     public ResponseEntity<UUID> createNewClient(@RequestBody ClientFullInfoDto clientFullInfoDto) {
-        Client client = clientService.createNewClient(clientFullInfoDto);
+        Client client=clientService.createNewClient(clientFullInfoDto);
         return ResponseEntity.created(URI.create("/" + client.getId())).body(client.getId());
     }
-
 
 }

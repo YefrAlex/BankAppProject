@@ -30,5 +30,6 @@ public class ClientFullInfoDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     List<AccountForClientDto> accounts;
 
+
 }
 

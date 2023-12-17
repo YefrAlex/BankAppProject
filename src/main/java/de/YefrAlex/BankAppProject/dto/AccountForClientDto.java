@@ -15,7 +15,5 @@ public class AccountForClientDto {
     BigDecimal balance;
     String currencyCode;
 
-    public AccountForClientDto() {
-    }
 
 }
