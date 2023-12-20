@@ -15,6 +15,7 @@ public class EmployeeDto {
     String lastName;
     Role role;
     String email;
+    String password;
     String phone;
     Country country;
     boolean isBlocked;

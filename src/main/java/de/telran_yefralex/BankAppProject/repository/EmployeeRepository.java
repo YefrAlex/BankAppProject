@@ -31,12 +31,10 @@ public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
             "SET e.firstName = CASE WHEN :firstName IS NOT NULL THEN :firstName ELSE e.firstName END, " +
             "e.lastName = CASE WHEN :lastName IS NOT NULL THEN :lastName ELSE e.lastName END, " +
             "e.role = CASE WHEN :role IS NOT NULL THEN :role ELSE e.role END, " +
-            "e.email = CASE WHEN :email IS NOT NULL THEN :email ELSE e.email END, " +
             "e.phone = CASE WHEN :phone IS NOT NULL THEN :phone ELSE e.phone END, " +
             "e.country = CASE WHEN :country IS NOT NULL THEN :country ELSE e.country END " +
-            "WHERE e.id = :id")
-    void updateEmployee (@Param("id") UUID id,
-                         @Param("firstName") String firstName,
+            "WHERE e.email = :email")
+    void updateEmployee (@Param("firstName") String firstName,
                          @Param("lastName") String lastName,
                          @Param("role") Role role,
                          @Param("email") String email,

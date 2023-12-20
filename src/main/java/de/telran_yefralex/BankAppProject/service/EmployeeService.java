@@ -12,7 +12,7 @@ public interface EmployeeService {
     List<EmployeeDto> getAll();
     List<EmployeeDto> getAllByRole(Role role);
     EmployeeDto getEmployeeByName(String firstName, String LastName);
-    void updateEmployee(String firstName, String lastName, Role role, String email, String phone, Country country, UUID id, Boolean isBlocked);
+    void updateEmployee(String firstName, String lastName, Role role, String email, String phone, Country country, Boolean isBlocked);
     Employee createNewEmployee (EmployeeDto employeeDto);
 
 }

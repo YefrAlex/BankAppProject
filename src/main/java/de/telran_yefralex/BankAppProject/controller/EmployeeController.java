@@ -35,15 +35,14 @@ public class EmployeeController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateEmployee(
-            @PathVariable(name = "id") UUID id,
+            @PathVariable(name = "email") String email,
             @RequestParam(name = "firstName", required = false) String firstName,
             @RequestParam(name = "lastName", required = false) String lastName,
             @RequestParam(name = "role", required = false) Role role,
-            @RequestParam(name = "email", required = false) String email,
             @RequestParam(name = "phone", required = false) String phone,
             @RequestParam(name = "country", required = false) Country country,
             @RequestParam(name = "isBlocked", required = false) Boolean isBlocked){
-        employeeService.updateEmployee(firstName, lastName, role, email, phone, country, id, isBlocked);
+        employeeService.updateEmployee(firstName, lastName, role, email, phone, country, isBlocked);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

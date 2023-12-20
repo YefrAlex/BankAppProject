@@ -1,14 +1,14 @@
-package de.YefrAlex.BankAppProject.controller;
+package de.telran_yefralex.BankAppProject.controller;
 
-import de.YefrAlex.BankAppProject.dto.ClientFullInfoDto;
-import de.YefrAlex.BankAppProject.dto.ClientShortDto;
-import de.YefrAlex.BankAppProject.dto.ProductDto;
-import de.YefrAlex.BankAppProject.entity.Client;
-import de.YefrAlex.BankAppProject.entity.Product;
-import de.YefrAlex.BankAppProject.entity.enums.Country;
-import de.YefrAlex.BankAppProject.service.impl.ClientServiceImpl;
+
+import de.telran_yefralex.BankAppProject.dto.ClientFullInfoDto;
+import de.telran_yefralex.BankAppProject.dto.ClientShortDto;
+import de.telran_yefralex.BankAppProject.entity.Client;
+import de.telran_yefralex.BankAppProject.entity.enums.Country;
+import de.telran_yefralex.BankAppProject.service.impl.ClientServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -26,8 +26,9 @@ public class ClientController  {
         this.clientService=clientService;
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/find/all/short")
-    public ResponseEntity<List<ClientShortDto>> findAllShort() {
+    public ResponseEntity<ResponseEntity<List<ClientShortDto>>> findAllShort() {
         return ResponseEntity.ok(clientService.findAllShort());
     }
     @GetMapping("/find/taxcode/{taxCode}")
@@ -38,7 +39,7 @@ public class ClientController  {
     public ResponseEntity<ClientShortDto> findByEmail(@PathVariable(name = "email") String email) {
         return ResponseEntity.ok(clientService.findClientByEmail(email));
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/find/all/full")
     public ResponseEntity<List<ClientFullInfoDto>> findAllFullInfo() {
         return ResponseEntity.ok(clientService.findAllFullInfo());

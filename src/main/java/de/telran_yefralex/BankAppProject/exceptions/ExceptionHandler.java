@@ -138,4 +138,13 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(errorResponseDto);
     }
 
+    @org.springframework.web.bind.annotation.ExceptionHandler(EmailIsUsedException.class)
+    public ResponseEntity<ErrorResponseDto> handleEmailIsUsedException(Exception e){
+        ErrorResponseDto errorResponseDto= new ErrorResponseDto();
+        errorResponseDto.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+        errorResponseDto.setMessage(e.getMessage());
+        errorResponseDto.setTimestamp(LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(errorResponseDto);
+    }
+
 }

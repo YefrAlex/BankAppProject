@@ -50,6 +50,9 @@ public class Client {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @NotBlank(message = "Phone cant be empty")
     @Pattern(regexp = "\\+\\d{8,15}", message = "Phone is not valid")
     @Column(name = "phone")
@@ -82,9 +85,6 @@ public class Client {
 //    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonBackReference
     private Set<Account> accounts = new HashSet<>();
-
-
-
 
     @Override
     public boolean equals(Object o) {

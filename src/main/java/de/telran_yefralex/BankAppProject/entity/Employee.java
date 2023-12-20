@@ -43,6 +43,9 @@ public class Employee {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @NotEmpty(message = "Phone cant be empty")
     @Pattern(regexp = "\\+\\d{8,15}", message = "Phone is not valid")
     @Column(name = "phone")

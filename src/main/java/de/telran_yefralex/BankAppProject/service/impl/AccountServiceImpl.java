@@ -59,16 +59,15 @@ public class AccountServiceImpl implements AccountService {
     public AccountDto getAccountByNumber(String accountNumber) {
         Account account = accountRepository.getByNumber(accountNumber).orElseThrow(() -> new AccountNotFoundException(String.format(ErrorMessage.ACCOUNT_NOT_FOUND, accountNumber)));
         return accountMapper.toAccountDto(account);
-
     }
 
-    @Override
-    public Optional<Account> findByIdForTransaction(UUID id) {
-        if (accountRepository.findById(id).isEmpty()){
-            throw new AccountNotFoundException(String.format(ErrorMessage.ACCOUNT_NOT_FOUND, id));
-        }
-        return accountRepository.findById(id);
-    }
+//    @Override
+//    public Optional<Account> findByIdForTransaction(UUID id) {
+//        if (accountRepository.findById(id).isEmpty()){
+//            throw new AccountNotFoundException(String.format(ErrorMessage.ACCOUNT_NOT_FOUND, id));
+//        }
+//        return accountRepository.findById(id);
+//    }
 
     @Override
     public Account saveAccount(AccountDto accountDto) {
@@ -91,7 +90,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void updateAccount(String accountNumber, String mainManagerEmail, String assistantManagerEmail, AccountType type, CurrencyCode currencyCode, Boolean isBlocked) {
-        Account account=accountRepository.getByNumber(accountNumber).orElseThrow(() -> new AccountNotFoundException(String.format(ErrorMessage.ACCOUNT_NOT_FOUND, accountNumber)));
+        Account account=accountRepository.getByNumber(accountNumber).orElseThrow(
+                () -> new AccountNotFoundException(String.format(ErrorMessage.ACCOUNT_NOT_FOUND, accountNumber)));
         if (mainManagerEmail != null) {
             account.setMainManagerId(employeeRepository.findEmployeeByEmail(mainManagerEmail));
         }

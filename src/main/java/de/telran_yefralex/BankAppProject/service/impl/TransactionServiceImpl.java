@@ -10,7 +10,6 @@ import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.AccountNotFou
 import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.BalanceException;
 import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.EmptyTransactionsListException;
 import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.TransactionNotFoundException;
-import de.telran_yefralex.BankAppProject.mapper.AccountMapper;
 import de.telran_yefralex.BankAppProject.mapper.TransactionMapper;
 import de.telran_yefralex.BankAppProject.repository.AccountRepository;
 import de.telran_yefralex.BankAppProject.repository.TransactionRepository;
@@ -31,14 +30,15 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository transactionRepository;
     private final TransactionMapper transactionMapper;
     private final AccountRepository accountRepository;
-    private final AccountMapper accountMapper;
 
-    public TransactionServiceImpl(TransactionRepository transactionRepository, TransactionMapper transactionMapper, AccountRepository accountRepository, AccountMapper accountMapper) {
+
+    public TransactionServiceImpl(TransactionRepository transactionRepository, TransactionMapper transactionMapper, AccountRepository accountRepository) {
         this.transactionRepository=transactionRepository;
         this.transactionMapper=transactionMapper;
         this.accountRepository=accountRepository;
-        this.accountMapper=accountMapper;
+
     }
+
 
     @Override
     public List<TransactionDto> getAllTransactions() {
@@ -114,7 +114,7 @@ public class TransactionServiceImpl implements TransactionService {
         return createTransaction(transactionDto);
     }
 
-    private Transaction saveTransactionFromDto(TransactionDto transactionDto, Account debitAccountId, Account creditAccountId) {
+    public Transaction saveTransactionFromDto(TransactionDto transactionDto, Account debitAccountId, Account creditAccountId) {
         Transaction transaction=new Transaction();
         transaction.setId(null);
         transaction.setCreatedAt(LocalDateTime.now());

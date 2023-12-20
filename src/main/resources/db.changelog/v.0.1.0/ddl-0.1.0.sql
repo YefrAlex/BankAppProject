@@ -9,10 +9,11 @@ create table if not exists die_bank.employees
     last_name  varchar(50) not null,
     role       varchar (10) not null,
     email      varchar(60) not null,
+    password   varchar(60) not null,
     phone      varchar(16) not null,
     country    varchar(16) not null,
     created_at timestamp   DEFAULT CURRENT_TIMESTAMP,
-    updated_at  timestamp   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at timestamp   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     is_blocked  boolean        not null default false,
     unique (email)
 );
@@ -25,11 +26,12 @@ create table if not exists die_bank.clients
     tax_code      varchar(20),
     credit_rating int DEFAULT 0 not null,
     email         varchar(60) not null,
+    password      varchar(60) not null,
     address       varchar(80) not null,
     phone         varchar(16) not null,
     country       varchar(16) not null,
     created_at    timestamp   DEFAULT CURRENT_TIMESTAMP,
-    updated_at     timestamp   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at    timestamp   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     is_blocked    boolean    not null default false,
     unique (tax_code, email)
 );

@@ -4,6 +4,7 @@ import de.telran_yefralex.BankAppProject.dto.ProductDto;
 import de.telran_yefralex.BankAppProject.entity.Product;
 import de.telran_yefralex.BankAppProject.entity.enums.ProductType;
 import de.telran_yefralex.BankAppProject.exceptions.ErrorMessage;
+import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.AccountNotFoundException;
 import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.EmptyProductsListException;
 import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.ProductNotFoundException;
 import de.telran_yefralex.BankAppProject.mapper.ProductMapper;
@@ -64,10 +65,8 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     @Override
     public void updateProduct(Long id, BigDecimal interestRate, BigDecimal limit, Integer limitDuration, Boolean isBlocked) {
-        Product product = productRepository.getProductDtoById(id);
-        if (product == null){
-            throw new ProductNotFoundException(ErrorMessage.PRODUCT_NOT_FOUND);
-        }
+        Product product = productRepository.findById(id).orElseThrow(
+                () -> new ProductNotFoundException(String.format(ErrorMessage.PRODUCT_NOT_FOUND, id)));
         productRepository.updateProduct(id, interestRate, limit, limitDuration, isBlocked);
     }
 

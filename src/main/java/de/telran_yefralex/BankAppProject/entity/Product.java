@@ -35,7 +35,7 @@ public class Product {
     @Column(name = "interest_rate", nullable = false)
     private BigDecimal interestRate;
 
-    @Column(name = "limit_sum", nullable = false)
+    @Column(name = "limit", nullable = false)
     private BigDecimal limit;
 
     @Column(name = "limit_duration", nullable = false)

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -16,7 +16,7 @@ public class TransactionDto {
         @JsonInclude(JsonInclude.Include.NON_NULL)
         private String description;
         @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-        private Date createdAt;
+        private LocalDateTime createdAt;
 
         public TransactionDto() {
         }

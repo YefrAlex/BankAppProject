@@ -18,4 +18,6 @@ public class ErrorMessage {
     public static final String TRANSACTION_NOT_FOUND = "unfortunately no such transaction was found, check that the %s is correct";
 
     public static final String BALANCE_EX = "not enough funds in the account";
+
+    public static final String IS_USED = "this email %s is already used";
 }
