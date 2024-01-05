@@ -16,10 +16,21 @@ spring:
     change-log: classpath:db.changelog/changelog-master.yaml
   server:
     port: 8080
-  security:
-    user:
-      name: admin
-      password: admin
+#  security:
+#    user:
+#      name: admin
+#      password: admin
+#  openapi:
+#      info:
+#        title: Your API
+#        version: 1.0.0
+#      securitySchemes:
+#        bearerAuth:
+#          type: http
+#          scheme: bearer
+#          bearerFormat: JWT
+#      security:
+#        - bearerAuth: [ ]
 #  jwt:
 #    secret:
 #      access: mO2clU1rRiZnwJuVqAMowf8KNnhbuceE4ecueQ0wSRlWUOy/lMxg6OLkGGpVr4dlUMZdscAEWWSzZv9sjnZheA==

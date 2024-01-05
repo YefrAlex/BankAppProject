@@ -29,15 +29,18 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authz -> authz
                                .requestMatchers(
-                                      "/auth/login", "/auth/token",
-                                       "/v2/api-docs",
+                                      "/auth/**",
+                                       "/v2/api-docs/**",
                                         "/configuration/ui",
                                         "/swagger-resources/",
                                         "/configuration/security",
-                                        "/swagger-ui/index.html",
                                         "/webjars/",
-                                       "/swagger-ui.html", "/api/v1/auth/", "/v3/api-docs/", "/swagger-ui/**"
-
+                                       "/v3/api-docs/**",
+                                       "/swagger-ui.html",
+                                       "/api/v1/auth/",
+                                       "/swagger-ui/**",
+                                       "/product/all-active",
+                                       "/product/all-active/{type}"
 //                               "/**"
                               )
                                 .permitAll()
