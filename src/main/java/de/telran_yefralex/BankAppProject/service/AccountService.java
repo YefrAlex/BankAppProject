@@ -15,7 +15,7 @@ public interface AccountService {
 
       List<AccountDto> findAll ();
 
-      List<AccountForClientDto> findAllClientsAccount();
+      List<AccountForClientDto> findAllClientsAccount(String clientEMail);
 
     AccountDto getAccountByNumber(String accountNumber);
 
@@ -24,4 +24,6 @@ public interface AccountService {
     Account saveAccount(AccountDto accountDto);
 
     void updateAccount(String accountNumber, String mainManagerEmail, String assistantManagerEmail, AccountType type, CurrencyCode currencyCode, Boolean isBlocked);
+
+    List<AccountDto> findManagerAll(String managerEmail);
 }

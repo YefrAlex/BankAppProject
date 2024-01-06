@@ -1,5 +1,6 @@
 package de.telran_yefralex.BankAppProject.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import de.telran_yefralex.BankAppProject.entity.enums.AccountType;
 import de.telran_yefralex.BankAppProject.entity.enums.CurrencyCode;
 import lombok.*;
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
 @Setter
 public class AccountDto {
     private String taxCode;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String mainManager;
     private String assistantManager;
     private String accountNumber;
@@ -21,8 +23,4 @@ public class AccountDto {
     public AccountDto() {
     }
 
-    //    @OneToMany( mappedBy = "debitAccountId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private Set<Transaction> debitTransactions = new HashSet<>();
-//    @OneToMany( mappedBy = "debitAccountId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private Set<Transaction> creditTransactions = new HashSet<>();
 }

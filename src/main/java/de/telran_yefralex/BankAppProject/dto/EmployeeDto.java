@@ -15,6 +15,7 @@ public class EmployeeDto {
     String lastName;
     Role role;
     String email;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String password;
     String phone;
     Country country;

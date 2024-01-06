@@ -29,6 +29,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -53,18 +54,52 @@ public class AccountServiceTest {
     private List<Account> expectedAccountList;
     private List<AccountDto> expectedAccountDtoList;
     private List<AccountForClientDto> expectedAccountForClientDtoList;
+    private Client expectedClient;
     private Client client;
     private Employee mainManager;
+    private Employee expectedEmployee;
     private Employee assistantManager;
     private ManagerForClientDto mainManagerDto;
     private ManagerForClientDto assistantManagerDto;
 
     @BeforeEach
     void init() {
+        expectedClient=new Client();
+        expectedClient.setId(UUID.fromString("52DE358F-45F1-E311-93EA-00269E58F20D"));
+        expectedClient.setFirstName("Name");
+        expectedClient.setLastName("FamiliaName");
+        expectedClient.setTaxCode("123456789ABC");
+        expectedClient.setPassword("password");
+        expectedClient.setCreditRating(1);
+        expectedClient.setEmail("test@test.com");
+        expectedClient.setPhone("+4912341234567");
+        expectedClient.setAddress("Test address");
+        expectedClient.setCountry(Country.AUSTRIA);
+        expectedClient.setCreatedAt(LocalDateTime.now());
+        expectedClient.setUpdatedAt(LocalDateTime.now());
+        expectedClient.setBlocked(false);
+        expectedClient.setAccounts(new HashSet<>());
+
+        expectedEmployee = new Employee();
+        expectedEmployee.setId(UUID.fromString("52DE358F-45F1-E311-93EA-00269E58F20D"));
+        expectedEmployee.setFirstName("Name");
+        expectedEmployee.setLastName("FamiliaName");
+        expectedEmployee.setRole(Role.MANAGER);
+        expectedEmployee.setEmail("test@test.com");
+        expectedEmployee.setPassword("password");
+        expectedEmployee.setEmail("test@test.com");
+        expectedEmployee.setPhone("+4912341234567");
+        expectedEmployee.setCountry(Country.AUSTRIA);
+        expectedEmployee.setCreatedAt(LocalDateTime.now());
+        expectedEmployee.setUpdatedAt(LocalDateTime.now());
+        expectedEmployee.setBlocked(false);
+        expectedEmployee.setMainManagerAccounts(new HashSet<>());
+        expectedEmployee.setAssistantManagerAccounts(new HashSet<>());
+
         expectedAccount=new Account();
         expectedAccount.setId(UUID.fromString("52DE358F-45F1-E311-93EA-00269E58F20D"));
-        expectedAccount.setClientId(client);
-        expectedAccount.setMainManagerId(mainManager);
+        expectedAccount.setClientId(expectedClient);
+        expectedAccount.setMainManagerId(expectedEmployee);
         expectedAccount.setAssistantManagerId(assistantManager);
         expectedAccount.setAccountNumber("accountNumber");
         expectedAccount.setType(AccountType.CREDIT);
@@ -122,20 +157,38 @@ public class AccountServiceTest {
 
     @Test
     public void testFindAllClientsAccount() {
-        when(accountRepositoryMock.findAll()).thenReturn(expectedAccountList);
+        when(accountRepositoryMock.findAllClientAccounts(anyString())).thenReturn(expectedAccountList);
         when(accountMapperMock.toAccountForClientDto(expectedAccountList.get(0))).thenReturn(expectedAccountForClientDtoList.get(0));
-        List<AccountForClientDto> result=accountServiceTest.findAllClientsAccount();
+        List<AccountForClientDto> result=accountServiceTest.findAllClientsAccount(expectedClient.getEmail());
         assertEquals(expectedAccountForClientDtoList, result);
     }
 
     @Test
     public void testFindAllClientsAccount_EmptyListException() {
-        when(accountRepositoryMock.findAll()).thenReturn(List.of());
+        when(accountRepositoryMock.findAllClientAccounts(anyString())).thenReturn(List.of());
         EmptyAccountsListException exception=assertThrows(EmptyAccountsListException.class, () -> {
-            accountServiceTest.findAll();
+            accountServiceTest.findAllClientsAccount(expectedClient.getEmail());
         });
         assertEquals(ErrorMessage.EMPTY_ACCOUNTS_LIST, exception.getMessage());
-        verify(accountRepositoryMock).findAll();
+        verify(accountRepositoryMock).findAllClientAccounts(anyString());
+        verifyNoInteractions(accountMapperMock);
+    }
+    @Test
+    public void testFindManagerAll() {
+        when(accountRepositoryMock.findManagerAll(anyString())).thenReturn(expectedAccountList);
+        when(accountMapperMock.toAccountDto(expectedAccountList.get(0))).thenReturn(expectedAccountDtoList.get(0));
+        List<AccountDto> result=accountServiceTest.findManagerAll(expectedEmployee.getEmail());
+        assertEquals(expectedAccountDtoList, result);
+    }
+
+    @Test
+    public void testFindManagerAll_EmptyListException() {
+        when(accountRepositoryMock.findManagerAll(anyString())).thenReturn(List.of());
+        EmptyAccountsListException exception=assertThrows(EmptyAccountsListException.class, () -> {
+            accountServiceTest.findManagerAll(expectedEmployee.getEmail());
+        });
+        assertEquals(ErrorMessage.EMPTY_ACCOUNTS_LIST, exception.getMessage());
+        verify(accountRepositoryMock).findManagerAll(anyString());
         verifyNoInteractions(accountMapperMock);
     }
 

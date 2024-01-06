@@ -11,6 +11,7 @@ import de.telran_yefralex.BankAppProject.mapper.AgreementMapper;
 import de.telran_yefralex.BankAppProject.repository.AccountRepository;
 import de.telran_yefralex.BankAppProject.repository.AgreementRepository;
 import de.telran_yefralex.BankAppProject.repository.ProductRepository;
+import de.telran_yefralex.BankAppProject.service.AgreementService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class AgreementServiceImpl {
+public class AgreementServiceImpl implements AgreementService {
 
     private final AgreementRepository agreementRepository;
     private final AgreementMapper agreementMapper;
@@ -36,6 +37,17 @@ public class AgreementServiceImpl {
 
     public List<AgreementDto> findAll() {
         List<Agreement> agreements = agreementRepository.findAll();
+        if (agreements.isEmpty()){
+            throw new EmptyAgreementsListException(ErrorMessage.EMPTY_AGREEMENTS_LIST);
+        }
+        return agreements.stream()
+                .map(agreementMapper::toAgreementDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AgreementDto> findMyAgreement(String userEmail) {
+        List<Agreement> agreements = agreementRepository.findMyAgreement(userEmail);
         if (agreements.isEmpty()){
             throw new EmptyAgreementsListException(ErrorMessage.EMPTY_AGREEMENTS_LIST);
         }

@@ -12,12 +12,13 @@ public class JwtAuthentication implements Authentication {
 
     private boolean authenticated;
     private String username;
-    private String firstName;
+    private String email;
     //todo может сделать одну роль ?
     private Set<SimpleGrantedAuthority> roles;
 
-    public JwtAuthentication(String username, Collection<String> roles) {
+    public JwtAuthentication(String username, String email,  Collection<String> roles) {
         this.username = username;
+        this.email = email;
         this.roles = roles.stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .collect(Collectors.toSet());
@@ -56,6 +57,6 @@ public class JwtAuthentication implements Authentication {
 
     @Override
     public String getName() {
-        return firstName;
+        return email;
     }
 }

@@ -25,7 +25,6 @@ public class Agreement {
     @Column(name = "id", updatable = false)
     private Long id;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN)
     @JsonIgnore
@@ -80,11 +79,3 @@ public class Agreement {
     }
 }
 
-/*
-Table agreements {
-   
-
-
-
-
- */

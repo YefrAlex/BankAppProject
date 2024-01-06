@@ -9,8 +9,6 @@ import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import lombok.NonNull;
 
@@ -43,27 +41,27 @@ public class JwtProvider {
 
     public String generateAccessToken(@NonNull Employee employee) {
         final LocalDateTime now = LocalDateTime.now();
-        final Instant accessExpirationInstant = now.plusMinutes(15).atZone(ZoneId.systemDefault()).toInstant();
+        final Instant accessExpirationInstant = now.plusMinutes(30).atZone(ZoneId.systemDefault()).toInstant();
         final Date accessExpiration = Date.from(accessExpirationInstant);
         return Jwts.builder()
                 .setSubject(employee.getEmail())
                 .setExpiration(accessExpiration)
                 .signWith(jwtAccessSecret)
                 .claim("roles", employee.getRole())
-                .claim("firstName", employee.getFirstName())
+                .claim("email", employee.getEmail())
                 .compact();
     }
 
     public String generateAccessToken(@NonNull Client client) {
         final LocalDateTime now = LocalDateTime.now();
-        final Instant accessExpirationInstant = now.plusMinutes(15).atZone(ZoneId.systemDefault()).toInstant();
+        final Instant accessExpirationInstant = now.plusMinutes(30).atZone(ZoneId.systemDefault()).toInstant();
         final Date accessExpiration = Date.from(accessExpirationInstant);
         return Jwts.builder()
                 .setSubject(client.getEmail())
                 .setExpiration(accessExpiration)
                 .signWith(jwtAccessSecret)
                 .claim("roles", Role.USER)
-                .claim("firstName", client.getFirstName())
+                .claim("email", client.getEmail())
                 .compact();
     }
 

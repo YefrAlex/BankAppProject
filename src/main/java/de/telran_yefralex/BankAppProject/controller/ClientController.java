@@ -26,15 +26,17 @@ public class ClientController  {
         this.clientService=clientService;
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @GetMapping("/find/all/short")
     public ResponseEntity<ResponseEntity<List<ClientShortDto>>> findAllShort() {
         return ResponseEntity.ok(clientService.findAllShort());
     }
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @GetMapping("/find/taxcode/{taxCode}")
     public ResponseEntity<ClientShortDto> findByTaxCode(@PathVariable(name = "taxCode") String taxCode) {
         return ResponseEntity.ok(clientService.findClientByTaxCode(taxCode));
     }
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @GetMapping("/find/email/{email}")
     public ResponseEntity<ClientShortDto> findByEmail(@PathVariable(name = "email") String email) {
         return ResponseEntity.ok(clientService.findClientByEmail(email));
@@ -44,7 +46,7 @@ public class ClientController  {
     public ResponseEntity<List<ClientFullInfoDto>> findAllFullInfo() {
         return ResponseEntity.ok(clientService.findAllFullInfo());
     }
-
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PutMapping("/update/{taxCode}")
     public ResponseEntity<String> updateClient(
             @PathVariable(name = "taxCode") String taxCode,
@@ -58,7 +60,7 @@ public class ClientController  {
         clientService.updateClient(taxCode, firstName, lastName, email, address, phone, country, isBlocked);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PostMapping("/create")
     public ResponseEntity<UUID> createNewClient(@RequestBody ClientFullInfoDto clientFullInfoDto) {
         Client client = clientService.createNewClient(clientFullInfoDto);

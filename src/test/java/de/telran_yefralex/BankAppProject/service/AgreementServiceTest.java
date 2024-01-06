@@ -1,9 +1,10 @@
 package de.telran_yefralex.BankAppProject.service;
 
 import de.telran_yefralex.BankAppProject.dto.AgreementDto;
-import de.telran_yefralex.BankAppProject.entity.Account;
-import de.telran_yefralex.BankAppProject.entity.Agreement;
-import de.telran_yefralex.BankAppProject.entity.Product;
+import de.telran_yefralex.BankAppProject.entity.*;
+import de.telran_yefralex.BankAppProject.entity.enums.AccountType;
+import de.telran_yefralex.BankAppProject.entity.enums.Country;
+import de.telran_yefralex.BankAppProject.entity.enums.CurrencyCode;
 import de.telran_yefralex.BankAppProject.exceptions.ErrorMessage;
 import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.AccountNotFoundException;
 import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.EmptyAgreementsListException;
@@ -21,9 +22,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -45,6 +45,10 @@ public class AgreementServiceTest {
     private Agreement expectedAgreement;
     private AgreementDto expectedAgreementDto;
     private Account account;
+    private Account expectedAccount;
+    private Client expectedClient;
+    private Employee mainManager;
+    private Employee assistantManager;
     private Product product;
     private List<Agreement> expectedAgreementList;
     private List<AgreementDto> expectedAgreementDtoList;
@@ -52,6 +56,35 @@ public class AgreementServiceTest {
 
     @BeforeEach
     void init() {
+        expectedClient=new Client();
+        expectedClient.setId(UUID.fromString("52DE358F-45F1-E311-93EA-00269E58F20D"));
+        expectedClient.setFirstName("Name");
+        expectedClient.setLastName("FamiliaName");
+        expectedClient.setTaxCode("123456789ABC");
+        expectedClient.setPassword("password");
+        expectedClient.setCreditRating(1);
+        expectedClient.setEmail("test@test.com");
+        expectedClient.setPhone("+4912341234567");
+        expectedClient.setAddress("Test address");
+        expectedClient.setCountry(Country.AUSTRIA);
+        expectedClient.setCreatedAt(LocalDateTime.now());
+        expectedClient.setUpdatedAt(LocalDateTime.now());
+        expectedClient.setBlocked(false);
+        expectedClient.setAccounts(new HashSet<>());
+
+        expectedAccount=new Account();
+        expectedAccount.setId(UUID.fromString("52DE358F-45F1-E311-93EA-00269E58F20D"));
+        expectedAccount.setClientId(expectedClient);
+        expectedAccount.setMainManagerId(mainManager);
+        expectedAccount.setAssistantManagerId(assistantManager);
+        expectedAccount.setAccountNumber("accountNumber");
+        expectedAccount.setType(AccountType.CREDIT);
+        expectedAccount.setBalance(BigDecimal.valueOf(1));
+        expectedAccount.setCurrencyCode(CurrencyCode.EUR);
+        expectedAccount.setCreatedAt(LocalDateTime.now());
+        expectedAccount.setUpdatedAt(LocalDateTime.now());
+        expectedAccount.setBlocked(false);
+
         expectedAgreement=new Agreement();
         expectedAgreement.setId(1l);
         expectedAgreement.setAccountId(account);
@@ -104,6 +137,25 @@ public class AgreementServiceTest {
     }
 
     @Test
+    public void testFindMyAgreement() {
+        when(agreementRepositoryMock.findMyAgreement(anyString())).thenReturn(expectedAgreementList);
+        when(agreementMapperMock.toAgreementDto(expectedAgreementList.get(0))).thenReturn(expectedAgreementDtoList.get(0));
+        List<AgreementDto> result=agreementServiceTest.findMyAgreement("test@test.com");
+        assertEquals(expectedAgreementDtoList, result);
+    }
+
+    @Test
+    public void testFindMyAgreement_EmptyAgreementListException() {
+        when(agreementRepositoryMock.findMyAgreement(anyString())).thenReturn(List.of());
+        EmptyAgreementsListException exception=assertThrows(EmptyAgreementsListException.class, () -> {
+            agreementServiceTest.findMyAgreement("test@test.com");
+        });
+        assertEquals(ErrorMessage.EMPTY_AGREEMENTS_LIST, exception.getMessage());
+        verify(agreementRepositoryMock).findMyAgreement(anyString());
+        verifyNoInteractions(agreementMapperMock);
+    }
+
+    @Test
     void testSaveAgreement() {
         Account account=new Account();
         Product product=new Product();
@@ -120,6 +172,7 @@ public class AgreementServiceTest {
         verify(productRepositoryMock).findById(1L);
         verify(agreementRepositoryMock).save(result);
     }
+
     @Test
     void testSaveAgreement_AccountNotFound() {
         expectedAgreementDto.setAccountNumber("nonExistentAccount");
@@ -131,6 +184,7 @@ public class AgreementServiceTest {
         verify(productRepositoryMock, never()).findById(1L);
         verify(agreementRepositoryMock, never()).save(expectedAgreement);
     }
+
     @Test
     void testUpdateAgreement() {
         when(agreementRepositoryMock.findById(1L)).thenReturn(Optional.of(expectedAgreement));

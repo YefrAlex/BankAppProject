@@ -44,8 +44,18 @@ public class AccountServiceImpl implements AccountService {
                 .collect(Collectors.toList());
     }
 
-    public List<AccountForClientDto> findAllClientsAccount() {
-        List<Account> clientsAccounts = accountRepository.findAll();
+    @Override
+    public List<AccountDto> findManagerAll(String managerEmail) {
+        List<Account> allAccounts=accountRepository.findManagerAll(managerEmail);
+        if (allAccounts.isEmpty()) {
+            throw new EmptyAccountsListException(ErrorMessage.EMPTY_ACCOUNTS_LIST);
+        }
+        return allAccounts.stream().map(accountMapper::toAccountDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<AccountForClientDto> findAllClientsAccount(String clientEMail) {
+        List<Account> clientsAccounts=accountRepository.findAllClientAccounts(clientEMail);
         if (clientsAccounts.isEmpty()) {
             throw new EmptyAccountsListException(ErrorMessage.EMPTY_ACCOUNTS_LIST);
         }
@@ -57,17 +67,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountDto getAccountByNumber(String accountNumber) {
-        Account account = accountRepository.getByNumber(accountNumber).orElseThrow(() -> new AccountNotFoundException(String.format(ErrorMessage.ACCOUNT_NOT_FOUND, accountNumber)));
+        Account account=accountRepository.getByNumber(accountNumber).orElseThrow(() -> new AccountNotFoundException(String.format(ErrorMessage.ACCOUNT_NOT_FOUND, accountNumber)));
         return accountMapper.toAccountDto(account);
     }
-
-//    @Override
-//    public Optional<Account> findByIdForTransaction(UUID id) {
-//        if (accountRepository.findById(id).isEmpty()){
-//            throw new AccountNotFoundException(String.format(ErrorMessage.ACCOUNT_NOT_FOUND, id));
-//        }
-//        return accountRepository.findById(id);
-//    }
 
     @Override
     public Account saveAccount(AccountDto accountDto) {
