@@ -16,7 +16,7 @@ public class JwtAuthentication implements Authentication {
     //todo может сделать одну роль ?
     private Set<SimpleGrantedAuthority> roles;
 
-    public JwtAuthentication(String username, String email,  Collection<String> roles) {
+    public JwtAuthentication(String username, String email, Collection<String> roles) {
         this.username = username;
         this.email = email;
         this.roles = roles.stream()

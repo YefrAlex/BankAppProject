@@ -10,6 +10,7 @@ import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.ProductNotFou
 import de.telran_yefralex.BankAppProject.mapper.ProductMapper;
 import de.telran_yefralex.BankAppProject.repository.ProductRepository;
 import de.telran_yefralex.BankAppProject.service.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
@@ -34,6 +36,7 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDto> getAllActiveProductsDto() {
         List<Product> allActiveProducts = productRepository.findAllActiveProducts();
         if (allActiveProducts.isEmpty()){
+            log.info("findAllActiveProducts() don't find any product");
             throw new EmptyProductsListException(ErrorMessage.EMPTY_PRODUCTS_LIST);
         }
         return allActiveProducts.stream()
