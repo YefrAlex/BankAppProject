@@ -1,5 +1,6 @@
 package de.telran_yefralex.BankAppProject.controller;
 
+import de.telran_yefralex.BankAppProject.controller.interfaces.EmployeeControllerInterface;
 import de.telran_yefralex.BankAppProject.dto.EmployeeDto;
 import de.telran_yefralex.BankAppProject.entity.Employee;
 import de.telran_yefralex.BankAppProject.entity.enums.Country;
@@ -20,7 +21,7 @@ import java.util.UUID;
 @RestController
 @Slf4j
 @RequestMapping("/employee")
-public class EmployeeController {
+public class EmployeeController implements EmployeeControllerInterface {
 
     private final EmployeeServiceImpl employeeService;
 

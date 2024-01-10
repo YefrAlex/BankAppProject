@@ -1,6 +1,7 @@
 package de.telran_yefralex.BankAppProject.controller;
 
 
+import de.telran_yefralex.BankAppProject.controller.interfaces.AgreementControllerInterface;
 import de.telran_yefralex.BankAppProject.dto.AgreementDto;
 import de.telran_yefralex.BankAppProject.entity.Agreement;
 import de.telran_yefralex.BankAppProject.service.AgreementService;
@@ -20,7 +21,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/agreement")
-public class AgreementController {
+public class AgreementController implements AgreementControllerInterface {
 
     private final AgreementService agreementService;
 
@@ -47,7 +48,7 @@ public class AgreementController {
 
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PostMapping("/newagreement")
-    public ResponseEntity<HttpStatus> createNewAccount(@RequestBody AgreementDto agreementDto, Principal principal, HttpServletRequest request)
+    public ResponseEntity<HttpStatus> createNewAgreement (@RequestBody AgreementDto agreementDto, Principal principal, HttpServletRequest request)
             throws ServerException {
         Agreement agreement=agreementService.saveAgreement(agreementDto);
         log.info("agreement with id = " + agreement.getId() + " created by manager " + principal.getName() + " from ip " + request.getRemoteAddr());

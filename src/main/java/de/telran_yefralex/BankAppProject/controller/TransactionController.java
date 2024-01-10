@@ -1,5 +1,6 @@
 package de.telran_yefralex.BankAppProject.controller;
 
+import de.telran_yefralex.BankAppProject.controller.interfaces.TransactionControllerInterface;
 import de.telran_yefralex.BankAppProject.dto.TransactionDto;
 import de.telran_yefralex.BankAppProject.entity.Transaction;
 import de.telran_yefralex.BankAppProject.service.impl.TransactionServiceImpl;
@@ -16,7 +17,7 @@ import java.util.UUID;
 @RestController
 @Slf4j
 @RequestMapping("/transaction")
-public class TransactionController {
+public class TransactionController implements TransactionControllerInterface {
 
     private final TransactionServiceImpl transactionService;
 
@@ -44,7 +45,7 @@ public class TransactionController {
     }
     @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_USER')")
     @GetMapping("/all/taxcode/{taxcode}")
-    public ResponseEntity<List<TransactionDto>> findById(@PathVariable(name = "taxcode") String taxCode, Principal principal, HttpServletRequest request) {
+    public ResponseEntity<List<TransactionDto>> findByTaxCode(@PathVariable(name = "taxcode") String taxCode, Principal principal, HttpServletRequest request) {
         log.info("all transactions for taxCode = " + taxCode + " watched by user/manager " + principal.getName() + " from ip " + request.getRemoteAddr());
         return ResponseEntity.ok(transactionService.getAllTransactionsOfTaxCode(taxCode));
     }

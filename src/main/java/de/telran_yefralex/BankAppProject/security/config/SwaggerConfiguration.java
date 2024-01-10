@@ -1,6 +1,7 @@
 package de.telran_yefralex.BankAppProject.security.config;
 
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
@@ -11,6 +12,16 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+@OpenAPIDefinition(
+        info = @io.swagger.v3.oas.annotations.info.Info(
+                title = "Bank Application Project",
+                description = "Bank Application", version = "1.0.0",
+                contact = @io.swagger.v3.oas.annotations.info.Contact(
+                        name = "Yefremenko Alexei",
+                        email = "aresboo@google.com"
+                )
+        )
+)
 @Configuration
 public class SwaggerConfiguration {
     @Bean

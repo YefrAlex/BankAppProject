@@ -1,5 +1,6 @@
 package de.telran_yefralex.BankAppProject.controller;
 
+import de.telran_yefralex.BankAppProject.controller.interfaces.ProductControllerInterface;
 import de.telran_yefralex.BankAppProject.dto.ProductDto;
 import de.telran_yefralex.BankAppProject.entity.Product;
 import de.telran_yefralex.BankAppProject.entity.enums.ProductType;
@@ -18,7 +19,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/product")
-public class ProductController {
+public class ProductController implements ProductControllerInterface {
 
     private final ProductService productService;
 

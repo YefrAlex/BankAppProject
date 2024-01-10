@@ -1,6 +1,7 @@
 package de.telran_yefralex.BankAppProject.controller;
 
 
+import de.telran_yefralex.BankAppProject.controller.interfaces.ClientControllerInterface;
 import de.telran_yefralex.BankAppProject.dto.ClientFullInfoDto;
 import de.telran_yefralex.BankAppProject.dto.ClientShortDto;
 import de.telran_yefralex.BankAppProject.entity.Client;
@@ -21,7 +22,7 @@ import java.util.UUID;
 @RestController
 @Slf4j
 @RequestMapping("/client")
-public class ClientController  {
+public class ClientController implements ClientControllerInterface {
 
     public final ClientServiceImpl clientService;
 

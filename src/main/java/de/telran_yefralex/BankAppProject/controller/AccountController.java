@@ -1,6 +1,7 @@
 package de.telran_yefralex.BankAppProject.controller;
 
 
+import de.telran_yefralex.BankAppProject.controller.interfaces.AccountControllerInterface;
 import de.telran_yefralex.BankAppProject.dto.AccountDto;
 import de.telran_yefralex.BankAppProject.dto.AccountForClientDto;
 import de.telran_yefralex.BankAppProject.entity.Account;
@@ -22,7 +23,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/account")
-public class AccountController {
+public class AccountController implements AccountControllerInterface {
     private final AccountServiceImpl accountService;
 
     public AccountController(AccountServiceImpl accountService) {
