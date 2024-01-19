@@ -5,7 +5,6 @@ import de.telran_yefralex.BankAppProject.dto.ProductDto;
 import de.telran_yefralex.BankAppProject.entity.Product;
 import de.telran_yefralex.BankAppProject.entity.enums.ProductType;
 import de.telran_yefralex.BankAppProject.service.ProductService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,22 +27,19 @@ public class ProductController implements ProductControllerInterface {
     }
 
     @GetMapping("/all-active")
-    public ResponseEntity<List<ProductDto>> getAllActiveProductDto(HttpServletRequest request) {
+    public ResponseEntity<List<ProductDto>> getAllActiveProductDto() {
         List<ProductDto> productsDto=productService.getAllActiveProductsDto();
-        log.info("getAllActiveProductDto was called from id = " + request.getRemoteAddr());
         return ResponseEntity.ok(productsDto);
     }
 
     @GetMapping("/all-active/{type}")
-    public ResponseEntity<List<ProductDto>> getAllActiveProductTypeDto(@PathVariable(name = "type") ProductType productType, HttpServletRequest request) {
-        log.info("getAllActiveProductType was called from id = " + request.getRemoteAddr());
+    public ResponseEntity<List<ProductDto>> getAllActiveProductTypeDto(@PathVariable(name = "type") ProductType productType) {
         List<ProductDto> productsDto=productService.getActiveProductsWithType(productType);
         return ResponseEntity.ok(productsDto);
     }
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @GetMapping("/id/{id}")
-    public ResponseEntity<ProductDto> getProductDtoById(@PathVariable(name = "id") Long id, Principal principal, HttpServletRequest request) {
-        log.info("product with id = " + id + " updated by manager " + principal.getName() + " from ip " + request.getRemoteAddr());
+    public ResponseEntity<ProductDto> getProductDtoById(@PathVariable(name = "id") Long id) {
         ProductDto productDto=productService.getProductDtoById(id);
         return ResponseEntity.ok(productDto);
     }
@@ -54,17 +50,14 @@ public class ProductController implements ProductControllerInterface {
             @RequestParam(name = "interestRate", required = false) BigDecimal interestRate,
             @RequestParam(name = "limit", required = false) BigDecimal limit,
             @RequestParam(name = "limitDuration", required = false) Integer limitDuration,
-            @RequestParam(name = "isBlocked", required = false) Boolean isBlocked,
-            Principal principal, HttpServletRequest request) {
-        log.info("product with id = " + id + " updated by manager " + principal.getName() + " from ip " + request.getRemoteAddr());
+            @RequestParam(name = "isBlocked", required = false) Boolean isBlocked) {
         productService.updateProduct(id, interestRate, limit, limitDuration, isBlocked);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PostMapping("/create")
-    public ResponseEntity<Long> createNewProduct(@RequestBody ProductDto productDto, Principal principal, HttpServletRequest request) {
+    public ResponseEntity<Long> createNewProduct(@RequestBody ProductDto productDto) {
         Product product=productService.createNewProduct(productDto);
-        log.info("product with id = " + product.getId() + " createded by manager " + principal.getName() + " from ip " + request.getRemoteAddr());
         return ResponseEntity.created(URI.create("/" + product.getId())).body(product.getId());
     }
 }

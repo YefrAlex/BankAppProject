@@ -5,7 +5,6 @@ import de.telran_yefralex.BankAppProject.dto.ClientShortDto;
 import de.telran_yefralex.BankAppProject.entity.enums.Country;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,25 +21,25 @@ public interface ClientControllerInterface {
             summary = "short information about all clients",
             description = "allows you to get information about all clients, requires the role of manager"
     )
-    ResponseEntity<ResponseEntity<List<ClientShortDto>>> findAllShort(Principal principal, HttpServletRequest request);
+    ResponseEntity<ResponseEntity<List<ClientShortDto>>> findAllShort();
 
     @Operation(
             summary = "short information about client by tax code",
             description = "allows you to get information client by tax code, requires the role of manager"
     )
-    ResponseEntity<ClientShortDto> findByTaxCode(@PathVariable(name = "taxCode") String taxCode, Principal principal, HttpServletRequest request);
+    ResponseEntity<ClientShortDto> findByTaxCode(@PathVariable(name = "taxCode") String taxCode);
 
     @Operation(
             summary = "short information about client by email",
             description = "allows you to get information client by email, requires the role of manager"
     )
-    ResponseEntity<ClientShortDto> findByEmail(@PathVariable(name = "email") String email, Principal principal, HttpServletRequest request);
+    ResponseEntity<ClientShortDto> findByEmail(@PathVariable(name = "email") String email);
 
     @Operation(
             summary = "full information about all clients",
             description = "allows you to get information about all clients, requires the role of admin"
     )
-    ResponseEntity<List<ClientFullInfoDto>> findAllFullInfo(Principal principal, HttpServletRequest request);
+    ResponseEntity<List<ClientFullInfoDto>> findAllFullInfo();
 
     @Operation(
             summary = "update information about client",
@@ -54,12 +53,11 @@ public interface ClientControllerInterface {
             @RequestParam(name = "address", required = false) String address,
             @RequestParam(name = "phone", required = false) String phone,
             @RequestParam(name = "country", required = false) Country country,
-            @RequestParam(name = "isBlocked", required = false) Boolean isBlocked,
-            Principal principal, HttpServletRequest request);
+            @RequestParam(name = "isBlocked", required = false) Boolean isBlocked);
 
     @Operation(
             summary = "create a new client",
             description = "allows you to create a new client, requires the role of manager"
     )
-    ResponseEntity<UUID> createNewClient(@RequestBody ClientFullInfoDto clientFullInfoDto, Principal principal, HttpServletRequest request);
+    ResponseEntity<UUID> createNewClient(@RequestBody ClientFullInfoDto clientFullInfoDto);
 }

@@ -8,6 +8,7 @@ import de.telran_yefralex.BankAppProject.exceptions.ErrorMessage;
 import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.ClientNotFoundException;
 import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.EmailIsUsedException;
 import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.EmptyClientsListException;
+import de.telran_yefralex.BankAppProject.mail.EmailService;
 import de.telran_yefralex.BankAppProject.mapper.ClientMapper;
 import de.telran_yefralex.BankAppProject.repository.ClientRepository;
 import de.telran_yefralex.BankAppProject.service.ClientService;
@@ -25,10 +26,13 @@ public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
     private final ClientMapper clientMapper;
     private final PasswordEncoder passwordEncoder;
-    public ClientServiceImpl(ClientRepository clientRepository, ClientMapper clientMapper, PasswordEncoder passwordEncoder) {
+    private final EmailService emailService;
+
+    public ClientServiceImpl(ClientRepository clientRepository, ClientMapper clientMapper, PasswordEncoder passwordEncoder, EmailService emailService) {
         this.clientRepository=clientRepository;
         this.clientMapper=clientMapper;
         this.passwordEncoder=passwordEncoder;
+        this.emailService=emailService;
     }
     public ResponseEntity<List<ClientShortDto>> findAllShort() {
         List<Client> allClients=clientRepository.findAll();
@@ -82,7 +86,15 @@ public class ClientServiceImpl implements ClientService {
         client.setId(null);
         client.setPassword(passwordEncoder.encode(clientFullInfoDto.getPassword()));
         client.setCreditRating(0);
+        notifyNewClient(client);
         return clientRepository.save(client);
+    }
+    public void notifyNewClient(Client client) {
+        String to = client.getEmail();
+        String subject = "Registration completed successfully";
+        String body = "Dear" + client.getFirstName()
+                + "Thank you for opening a new account. Best regards, Your Bank";
+        emailService.sendEmail(to, subject, body);
     }
 
 }

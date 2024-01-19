@@ -5,7 +5,6 @@ import de.telran_yefralex.BankAppProject.entity.enums.Country;
 import de.telran_yefralex.BankAppProject.entity.enums.Role;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,13 +20,13 @@ public interface EmployeeControllerInterface {
             summary = "short information about all employees",
             description = "allows you to get information about all employees, requires the role of manager or admin"
     )
-    ResponseEntity<List<EmployeeDto>> findAllShort(Principal principal, HttpServletRequest request);
+    ResponseEntity<List<EmployeeDto>> findAllShort();
 
     @Operation(
             summary = "information about all employees with the selected role",
             description = "allows you to get information about all employees with the selected role, requires the role of manager or admin"
     )
-    ResponseEntity<List<EmployeeDto>> findAllByRole(@PathVariable(name = "role") Role role, Principal principal, HttpServletRequest request);
+    ResponseEntity<List<EmployeeDto>> findAllByRole(@PathVariable(name = "role") Role role);
 
     @Operation(
             summary = "update information about employee",
@@ -40,12 +39,11 @@ public interface EmployeeControllerInterface {
             @RequestParam(name = "role", required = false) Role role,
             @RequestParam(name = "phone", required = false) String phone,
             @RequestParam(name = "country", required = false) Country country,
-            @RequestParam(name = "isBlocked", required = false) Boolean isBlocked,
-            Principal principal, HttpServletRequest request);
+            @RequestParam(name = "isBlocked", required = false) Boolean isBlocked);
 
     @Operation(
             summary = "create a new employee",
             description = "allows you to create a new employee, requires the role of admin"
     )
-    ResponseEntity<UUID> createNewEmployee(@RequestBody EmployeeDto employeeDto, Principal principal, HttpServletRequest request);
+    ResponseEntity<UUID> createNewEmployee(@RequestBody EmployeeDto employeeDto);
 }

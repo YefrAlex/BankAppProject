@@ -4,7 +4,6 @@ import de.telran_yefralex.BankAppProject.dto.ProductDto;
 import de.telran_yefralex.BankAppProject.entity.enums.ProductType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,19 +20,19 @@ public interface ProductControllerInterface {
             summary = "information about all active products",
             description = "allows you to get information about all active products, not require authorization"
     )
-    ResponseEntity<List<ProductDto>> getAllActiveProductDto(HttpServletRequest request);
+    ResponseEntity<List<ProductDto>> getAllActiveProductDto();
 
     @Operation(
             summary = "information about products with selected type",
             description = "allows you to get information about all products with selected type, not require authorization"
     )
-    ResponseEntity<List<ProductDto>> getAllActiveProductTypeDto(@PathVariable(name = "type") ProductType productType, HttpServletRequest request);
+    ResponseEntity<List<ProductDto>> getAllActiveProductTypeDto(@PathVariable(name = "type") ProductType productType);
 
     @Operation(
             summary = "information about product with selected id",
             description = "allows you to get information about product with selected id, requires the role of manager"
     )
-    ResponseEntity<ProductDto> getProductDtoById(@PathVariable(name = "id") Long id, Principal principal, HttpServletRequest request);
+    ResponseEntity<ProductDto> getProductDtoById(@PathVariable(name = "id") Long id);
 
     @Operation(
             summary = "update information about product",
@@ -44,12 +43,11 @@ public interface ProductControllerInterface {
             @RequestParam(name = "interestRate", required = false) BigDecimal interestRate,
             @RequestParam(name = "limit", required = false) BigDecimal limit,
             @RequestParam(name = "limitDuration", required = false) Integer limitDuration,
-            @RequestParam(name = "isBlocked", required = false) Boolean isBlocked,
-            Principal principal, HttpServletRequest request);
+            @RequestParam(name = "isBlocked", required = false) Boolean isBlocked);
 
     @Operation(
             summary = "create a new product",
             description = "allows you to create a new product, requires the role of manager"
     )
-    ResponseEntity<Long> createNewProduct(@RequestBody ProductDto productDto, Principal principal, HttpServletRequest request);
+    ResponseEntity<Long> createNewProduct(@RequestBody ProductDto productDto);
 }

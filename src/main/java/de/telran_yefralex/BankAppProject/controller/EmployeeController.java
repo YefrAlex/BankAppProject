@@ -6,7 +6,6 @@ import de.telran_yefralex.BankAppProject.entity.Employee;
 import de.telran_yefralex.BankAppProject.entity.enums.Country;
 import de.telran_yefralex.BankAppProject.entity.enums.Role;
 import de.telran_yefralex.BankAppProject.service.impl.EmployeeServiceImpl;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,15 +31,13 @@ public class EmployeeController implements EmployeeControllerInterface {
 
     @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/find/all")
-    public ResponseEntity<List<EmployeeDto>> findAllShort(Principal principal, HttpServletRequest request) {
-        log.info("findAllShort employee was called by employee " + principal.getName() + " from ip " + request.getRemoteAddr());
+    public ResponseEntity<List<EmployeeDto>> findAllShort() {
         return ResponseEntity.ok(employeeService.getAll());
     }
 
     @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/findrole/{role}")
-    public ResponseEntity<List<EmployeeDto>> findAllByRole(@PathVariable(name = "role") Role role, Principal principal, HttpServletRequest request) {
-        log.info("findAllByRole employee was called by employee " + principal.getName() + " from ip " + request.getRemoteAddr());
+    public ResponseEntity<List<EmployeeDto>> findAllByRole(@PathVariable(name = "role") Role role) {
         return ResponseEntity.ok(employeeService.getAllByRole(role));
     }
 
@@ -53,18 +50,15 @@ public class EmployeeController implements EmployeeControllerInterface {
             @RequestParam(name = "role", required = false) Role role,
             @RequestParam(name = "phone", required = false) String phone,
             @RequestParam(name = "country", required = false) Country country,
-            @RequestParam(name = "isBlocked", required = false) Boolean isBlocked,
-            Principal principal, HttpServletRequest request) {
-        log.info("employee with email = " + email + " updated by admin " + principal.getName() + " from ip " + request.getRemoteAddr());
+            @RequestParam(name = "isBlocked", required = false) Boolean isBlocked) {
         employeeService.updateEmployee(firstName, lastName, role, email, phone, country, isBlocked);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/create")
-    public ResponseEntity<UUID> createNewEmployee(@RequestBody EmployeeDto employeeDto, Principal principal, HttpServletRequest request) {
+    public ResponseEntity<UUID> createNewEmployee(@RequestBody EmployeeDto employeeDto) {
         Employee employee=employeeService.createNewEmployee(employeeDto);
-        log.info("employee with id = " + employee.getId() + " created by admin " + principal.getName() + " from ip " + request.getRemoteAddr());
         return ResponseEntity.created(URI.create("/" + employee.getId())).body(employee.getId());
     }
 

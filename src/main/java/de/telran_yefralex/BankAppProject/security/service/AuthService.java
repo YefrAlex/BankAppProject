@@ -34,15 +34,11 @@ public class AuthService {
     }
 
     public JwtResponse login(JwtRequest authRequest) throws AuthException {
-        // Получаем данные из запроса
         String username=authRequest.getUsername();
         String password=authRequest.getPassword();
-        // Определяем сущность на основе email
         if (username.contains("@bank.com")) {
-            // Employee
             return authenticateEmployee(username, password);
         } else {
-            // Client
             return authenticateClient(username, password);
         }
     }
@@ -50,7 +46,6 @@ public class AuthService {
     private JwtResponse authenticateEmployee(String email, String password) throws AuthException {
         Employee employee=employeeRepository.findEmployeeByEmail(email);
         if (employee != null && passwordEncoder.matches(password, employee.getPassword())) {
-            // Генерация JWT для Employee
             String jwt=jwtProvider.generateAccessToken(employee);
             String refreshToken=jwtProvider.generateRefreshToken(employee);
             refreshStorage.put(employee.getEmail(), refreshToken);
@@ -63,7 +58,6 @@ public class AuthService {
     private JwtResponse authenticateClient(String email, String password) throws AuthException {
         Client client=clientRepository.findClientByEmail(email);
         if (client != null && passwordEncoder.matches(password, client.getPassword())) {
-            // Генерация JWT для Client
             String accessToken=jwtProvider.generateAccessToken(client);
             String refreshToken=jwtProvider.generateRefreshToken(client);
             refreshStorage.put(client.getEmail(), refreshToken);

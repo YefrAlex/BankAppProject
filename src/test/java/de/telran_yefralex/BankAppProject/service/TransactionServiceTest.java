@@ -10,10 +10,8 @@ import de.telran_yefralex.BankAppProject.entity.enums.AccountType;
 import de.telran_yefralex.BankAppProject.entity.enums.CurrencyCode;
 import de.telran_yefralex.BankAppProject.entity.enums.TransactionType;
 import de.telran_yefralex.BankAppProject.exceptions.ErrorMessage;
-import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.AccountNotFoundException;
-import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.EmptyAgreementsListException;
-import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.EmptyTransactionsListException;
-import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.TransactionNotFoundException;
+import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.*;
+import de.telran_yefralex.BankAppProject.mail.EmailService;
 import de.telran_yefralex.BankAppProject.mapper.TransactionMapper;
 import de.telran_yefralex.BankAppProject.repository.AccountRepository;
 import de.telran_yefralex.BankAppProject.repository.TransactionRepository;
@@ -42,6 +40,8 @@ public class TransactionServiceTest {
     TransactionMapper transactionMapperMock;
     @Mock
     AccountRepository accountRepositoryMock;
+    @Mock
+    EmailService emailServiceMok;
     @InjectMocks
     private TransactionServiceImpl transactionServiceTest;
 
@@ -57,18 +57,35 @@ public class TransactionServiceTest {
 
     @BeforeEach
     void init() {
+        Client client = new Client();
+        client.setEmail("client@example.com");
+
+        debitAccountId = new Account();
+        debitAccountId.setId(UUID.fromString("52DE358F-45F1-E311-93EA-00269E58F20D"));
+        debitAccountId.setAccountNumber("debit");
+        debitAccountId.setBalance(new BigDecimal("1000"));
+        debitAccountId.setCurrencyCode(CurrencyCode.EUR);
+
+        creditAccountId = new Account();
+        creditAccountId.setId(UUID.fromString("52DE358F-99F1-E311-93EA-00269E58F20D"));
+        creditAccountId.setAccountNumber("credit");
+        creditAccountId.setClientId(client);
+        creditAccountId.setBalance(new BigDecimal("1000"));
+        creditAccountId.setCurrencyCode(CurrencyCode.EUR);
+
         expectedTransaction=new Transaction();
         expectedTransaction.setId(UUID.fromString("52DE358F-45F1-E311-93EA-00269E58F20D"));
         expectedTransaction.setCreditAccountId(creditAccountId);
         expectedTransaction.setDebitAccountId(debitAccountId);
         expectedTransaction.setType(TransactionType.PAYMENT);
         expectedTransaction.setAmount(BigDecimal.valueOf(100));
+        expectedTransaction.setCurrencyCode(CurrencyCode.EUR);
         expectedTransaction.setDescription("description");
         expectedTransaction.setCreatedAt(LocalDateTime.now());
 
         expectedTransactionDto=new TransactionDto();
-        expectedTransactionDto.setCreditAccountNumber("creditAccountId");
-        expectedTransactionDto.setDebitAccountNumber("debitAccountId");
+        expectedTransactionDto.setCreditAccountNumber("credit");
+        expectedTransactionDto.setDebitAccountNumber("debit");
         expectedTransactionDto.setAmount(BigDecimal.valueOf(100));
         expectedTransactionDto.setDescription("description");
         expectedTransactionDto.setCreatedAt(LocalDateTime.now());
@@ -159,5 +176,55 @@ public class TransactionServiceTest {
         assertEquals(expectedTransactionDto.getAmount(), result.getAmount());
         assertEquals(expectedTransactionDto.getDescription(), result.getDescription());
         assertEquals(TransactionType.DEPOSIT, result.getType());
+    }
+    @Test
+    void createTransaction_SuccessfulTransaction() {
+        when(accountRepositoryMock.getByNumber("debit")).thenReturn(Optional.of(debitAccountId));
+        when(accountRepositoryMock.getByNumber("credit")).thenReturn(Optional.of(creditAccountId));
+
+        Transaction transaction = new Transaction();
+        transaction.setDebitAccountId(debitAccountId);
+        transaction.setCreditAccountId(creditAccountId);
+        transaction.setAmount(new BigDecimal("100"));
+        transaction.setDescription("Test transaction");
+        transaction.setCurrencyCode(CurrencyCode.EUR);
+
+        when(transactionRepositoryMock.save(any(Transaction.class))).thenReturn(expectedTransaction);
+
+        transactionServiceTest.createTransaction(expectedTransactionDto, CurrencyCode.EUR);
+
+        verify(accountRepositoryMock, times(1)).getByNumber("debit");
+        verify(accountRepositoryMock, times(1)).getByNumber("credit");
+        verify(transactionRepositoryMock, times(1)).save(any(Transaction.class));
+        verify(emailServiceMok, times(1)).sendEmail(anyString(), anyString(), anyString());
+    }
+    @Test
+    void testCheckCreditAccountInCurrency() {
+        creditAccountId = mock(Account.class);
+        when(creditAccountId.getBalance()).thenReturn(BigDecimal.valueOf(200));
+        boolean result = transactionServiceTest.checkCreditAccountInCurrency(creditAccountId, BigDecimal.valueOf(100));
+        assertTrue(result);
+    }
+
+    @Test
+    void testCheckCreditAccountInCurrencyWithInsufficientFunds() {
+        creditAccountId = mock(Account.class);
+        when(creditAccountId.getBalance()).thenReturn(BigDecimal.valueOf(50));
+        assertThrows(BalanceException.class, () -> transactionServiceTest.checkCreditAccountInCurrency(creditAccountId, BigDecimal.valueOf(100)));
+    }
+    @Test
+    void testConvertToEuro() {
+        BigDecimal result = transactionServiceTest.convertToEuro(BigDecimal.valueOf(100), CurrencyCode.USD);
+        assertEquals(BigDecimal.valueOf(90.9091), result);
+    }
+    @Test
+    void testConvertFromEuro() {
+        BigDecimal result = transactionServiceTest.convertFromEuro(BigDecimal.valueOf(100), CurrencyCode.USD);
+        assertEquals(BigDecimal.valueOf(110.0), result);
+    }
+    @Test
+    void testNotifyClientTransaction() {
+        transactionServiceTest.notifyClientTransaction(expectedTransaction);
+        verify(emailServiceMok).sendEmail(eq("client@example.com"), eq("Transaction completed"), anyString());
     }
 }

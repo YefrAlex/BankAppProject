@@ -1,6 +1,7 @@
 package de.telran_yefralex.BankAppProject.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import de.telran_yefralex.BankAppProject.entity.enums.CurrencyCode;
 import de.telran_yefralex.BankAppProject.entity.enums.TransactionType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -41,6 +42,11 @@ public class Transaction {
 
     @Column(name = "amount", precision = 2)
     private BigDecimal amount;
+
+    @NotNull(message = "Currency code cant be empty")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "currency_code")
+    private CurrencyCode currencyCode;
 
     @Column(name = "description")
     @Size(max = 255, message = "Max size for description is 255 characters")

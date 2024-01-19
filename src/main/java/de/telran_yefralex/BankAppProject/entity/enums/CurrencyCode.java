@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 public enum CurrencyCode {
     PLN("Zloty", 4.58),
-    USD("US Dollar", 1.13),
+    USD("US Dollar", 1.1),
     EUR("Euro", 1.0),
     GBP("Pound Sterling", 0.85),
     CHF("Swiss Franc", 1.07),

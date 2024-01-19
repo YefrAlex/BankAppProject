@@ -2,6 +2,7 @@ package de.telran_yefralex.BankAppProject.service.impl;
 
 import de.telran_yefralex.BankAppProject.dto.TransactionDto;
 import de.telran_yefralex.BankAppProject.entity.Account;
+import de.telran_yefralex.BankAppProject.entity.Client;
 import de.telran_yefralex.BankAppProject.entity.Transaction;
 import de.telran_yefralex.BankAppProject.entity.enums.CurrencyCode;
 import de.telran_yefralex.BankAppProject.entity.enums.TransactionType;
@@ -10,6 +11,7 @@ import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.AccountNotFou
 import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.BalanceException;
 import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.EmptyTransactionsListException;
 import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.TransactionNotFoundException;
+import de.telran_yefralex.BankAppProject.mail.EmailService;
 import de.telran_yefralex.BankAppProject.mapper.TransactionMapper;
 import de.telran_yefralex.BankAppProject.repository.AccountRepository;
 import de.telran_yefralex.BankAppProject.repository.TransactionRepository;
@@ -30,13 +32,14 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository transactionRepository;
     private final TransactionMapper transactionMapper;
     private final AccountRepository accountRepository;
+    private final EmailService emailService;
 
 
-    public TransactionServiceImpl(TransactionRepository transactionRepository, TransactionMapper transactionMapper, AccountRepository accountRepository) {
+    public TransactionServiceImpl(TransactionRepository transactionRepository, TransactionMapper transactionMapper, AccountRepository accountRepository, EmailService emailService) {
         this.transactionRepository=transactionRepository;
         this.transactionMapper=transactionMapper;
         this.accountRepository=accountRepository;
-
+        this.emailService=emailService;
     }
 
 
@@ -78,28 +81,26 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
-    public Transaction createTransaction(TransactionDto transactionDto) {
+    public Transaction createTransaction(TransactionDto transactionDto, CurrencyCode inputCurrencyCode) {
         Optional<Account> debitAccountOptional = accountRepository.getByNumber(transactionDto.getDebitAccountNumber());
         Optional<Account> creditAccountOptional = accountRepository.getByNumber(transactionDto.getCreditAccountNumber());
         Transaction transaction = new Transaction();
-
         if (debitAccountOptional.isPresent() && creditAccountOptional.isPresent()) {
             Account debitAccount = debitAccountOptional.get();
             Account creditAccount = creditAccountOptional.get();
-            BigDecimal amountInEuro = convertToEuro(transactionDto.getAmount(), debitAccount.getCurrencyCode());
-            if (checkCreditAccount(creditAccount, amountInEuro)) {
-
-                BigDecimal newCreditBalance = creditAccount.getBalance().subtract(transactionDto.getAmount());
-                BigDecimal newDebitBalance = debitAccount.getBalance().add(convertFromEuro(amountInEuro,debitAccount.getCurrencyCode()));
-
+            BigDecimal amountInEuro  = convertToEuro(transactionDto.getAmount(), inputCurrencyCode);
+            BigDecimal amountInCurrency = convertFromEuro(amountInEuro,creditAccount.getCurrencyCode());
+            if (checkCreditAccountInCurrency(creditAccount, amountInCurrency)) {
+                BigDecimal newCreditBalance = creditAccount.getBalance().subtract(amountInCurrency);
+                BigDecimal newDebitBalance = debitAccount.getBalance().add(convertFromEuro(amountInEuro, debitAccount.getCurrencyCode()));
                 debitAccount.setBalance(newDebitBalance);
                 creditAccount.setBalance(newCreditBalance);
-
                 transaction = saveTransactionFromDto(transactionDto, debitAccount, creditAccount);
+                transaction.setCurrencyCode(inputCurrencyCode);
             }
         }  else throw new AccountNotFoundException(ErrorMessage.ACCOUNT_NOT_FOUND);
-
         transactionRepository.save(transaction);
+        notifyClientTransaction(transaction);
         return transaction;
     }
 
@@ -111,7 +112,7 @@ public class TransactionServiceImpl implements TransactionService {
         String tempAccountNumber=transactionDto.getCreditAccountNumber();
         transactionDto.setCreditAccountNumber(transactionDto.getDebitAccountNumber());
         transactionDto.setDebitAccountNumber(tempAccountNumber);
-        return createTransaction(transactionDto);
+        return createTransaction(transactionDto, transaction.getCurrencyCode());
     }
 
     public Transaction saveTransactionFromDto(TransactionDto transactionDto, Account debitAccountId, Account creditAccountId) {
@@ -126,22 +127,31 @@ public class TransactionServiceImpl implements TransactionService {
         return transaction;
     }
 
-    private Boolean checkCreditAccount(Account creditAccount, BigDecimal amountInEuro) {
-        BigDecimal creditBalanceInEuro = convertToEuro(creditAccount.getBalance(), creditAccount.getCurrencyCode());
-        if (creditBalanceInEuro.subtract(amountInEuro).compareTo(BigDecimal.ZERO) < 0) {
+     public Boolean checkCreditAccountInCurrency (Account creditAccount, BigDecimal amountInCurrency) {
+        BigDecimal creditBalance = creditAccount.getBalance();
+        if (creditBalance.subtract(amountInCurrency).compareTo(BigDecimal.ZERO) < 0) {
             throw new BalanceException(ErrorMessage.BALANCE_EX);
         }
         return true;
     }
 
-    private BigDecimal convertToEuro(BigDecimal amount, CurrencyCode currencyCode) {
+    public BigDecimal convertToEuro(BigDecimal amount, CurrencyCode currencyCode) {
         double exchangeRateToEuro=currencyCode.getExchangeRateToEuro();
         return amount.divide(BigDecimal.valueOf(exchangeRateToEuro), 4, RoundingMode.HALF_UP);
     }
-    private BigDecimal convertFromEuro(BigDecimal amount, CurrencyCode currencyCode) {
+    public BigDecimal convertFromEuro(BigDecimal amount, CurrencyCode currencyCode) {
         double exchangeRateToEuro=currencyCode.getExchangeRateToEuro();
         return amount.multiply(BigDecimal.valueOf(exchangeRateToEuro));
     }
+    public void notifyClientTransaction(Transaction transaction) {
+        String to = transaction.getCreditAccountId().getClientId().getEmail();
+        String subject = "Transaction completed";
+        String body = "Dear " + transaction.getCreditAccountId().getClientId().getFirstName()
+                + " an amount " +transaction.getAmount() + " " + transaction.getCurrencyCode().getCurrencyName() +  " has been debited from your account" +
+                " transaction id =  " + transaction.getId();
+        emailService.sendEmail(to, subject, body);
+    }
+
 }
 
 

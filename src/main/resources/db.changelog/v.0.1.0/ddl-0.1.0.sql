@@ -92,6 +92,7 @@ create table if not exists die_bank.transactions
     credit_account_id binary(16)     not null,
     type              varchar(10)    not null,
     amount            decimal(12, 2) not null,
+    currency_code     varchar(3)     not null,
     description       varchar(255),
     created_at        timestamp      DEFAULT CURRENT_TIMESTAMP,
     foreign key (debit_account_id) references accounts (id),

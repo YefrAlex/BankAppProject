@@ -11,6 +11,7 @@ import de.telran_yefralex.BankAppProject.entity.enums.Country;
 import de.telran_yefralex.BankAppProject.entity.enums.CurrencyCode;
 import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.ClientNotFoundException;
 import de.telran_yefralex.BankAppProject.exceptions.exceptionslist.EmailIsUsedException;
+import de.telran_yefralex.BankAppProject.mail.EmailService;
 import de.telran_yefralex.BankAppProject.mapper.ClientMapper;
 import de.telran_yefralex.BankAppProject.repository.ClientRepository;
 
@@ -46,6 +47,8 @@ public class ClientServiceTest {
     ClientMapper clientMapperMock;
     @Mock
     PasswordEncoder passwordEncoderMock;
+    @Mock
+    EmailService emailServiceMok;
 
     @InjectMocks
     private ClientServiceImpl clientServiceTest;
@@ -129,101 +132,74 @@ public class ClientServiceTest {
 
     @Test
     public void testFindAllShort() {
-        // Устанавливаем поведение моков для clientRepositoryMock и clientMapperMock
         when(clientRepositoryMock.findAll()).thenReturn(expectedClientList);
         when(clientMapperMock.toClientShortDto(expectedClientList.get(0))).thenReturn(expectedClientShortDtoList.get(0));
-        // Вызываем тестируемый метод
         ResponseEntity<List<ClientShortDto>> result=clientServiceTest.findAllShort();
-        // Проверяем, что результат соответствует ожидаемому
         assertEquals(expectedClientShortDtoList, result.getBody());
     }
     @Test
     void testFindClientByTaxCode() {
-        // Arrange
         when(clientRepositoryMock.findClientByTaxCode(anyString())).thenReturn(expectedClient);
         when(clientMapperMock.toClientShortDto(any())).thenReturn(expectedClientShortDto);
-        // Act
         ClientShortDto result = clientServiceTest.findClientByTaxCode("123456789ABC");
-        // Assert
         assertEquals(expectedClientShortDto, result);
     }
     @Test
     void testFindClientByTaxCode_WhenClientNotExists() {
-        // Arrange
         when(clientRepositoryMock.findClientByTaxCode(anyString())).thenReturn(null);
-        // Act & Assert
         assertThrows(ClientNotFoundException.class, () -> clientServiceTest.findClientByTaxCode("123456789ABC"));
     }
     @Test
     void testFindClientByEmail() {
-        // Arrange
         when(clientRepositoryMock.findClientByEmail(anyString())).thenReturn(expectedClient);
         when(clientMapperMock.toClientShortDto(any())).thenReturn(expectedClientShortDto);
-        // Act
         ClientShortDto result = clientServiceTest.findClientByEmail("test@test.com");
-        // Assert
         assertEquals(expectedClientShortDto, result);
     }
     @Test
     void testFindClientByEmail_WhenClientNotExists() {
-        // Arrange
         when(clientRepositoryMock.findClientByEmail(anyString())).thenReturn(null);
-        // Act & Assert
         assertThrows(ClientNotFoundException.class, () -> clientServiceTest.findClientByEmail("test@test.com"));
     }
     @Test
     public void testFindAllFullInfo() {
-        // Устанавливаем поведение моков для clientRepositoryMock и clientMapperMock
         when(clientRepositoryMock.findAll()).thenReturn(expectedClientList);
         when(clientMapperMock.toClientFullInfoDto(expectedClientList.get(0))).thenReturn(expectedClientFullInfoDtoList.get(0));
-        // Вызываем тестируемый метод
         List<ClientFullInfoDto> result=clientServiceTest.findAllFullInfo();
-        // Проверяем, что результат соответствует ожидаемому
         assertEquals(expectedClientFullInfoDtoList, result);
     }
     @Test
     public void testUpdateClient() {
-        // Устанавливаем поведение моков для clientRepositoryMock
+
         when(clientRepositoryMock.findClientByTaxCode(anyString())).thenReturn(expectedClient);
-        // Вызываем тестируемый метод
         clientServiceTest.updateClient(
                 "123456789ABC", "NewName", "NewLastName", "new@test.com", "New Address", "+491234567890", Country.GERMANY, true);
-
-        // Проверяем, что методы репозитория были вызваны с правильными параметрами
         verify(clientRepositoryMock).findClientByTaxCode("123456789ABC");
         verify(clientRepositoryMock).updateClient(
                 "123456789ABC", "NewName", "NewLastName", "new@test.com", "New Address", "+491234567890", Country.GERMANY);
 
-        // Проверяем, что метод save был вызван, так как isBlocked == true
         verify(clientRepositoryMock).save(any(Client.class));
     }
 
     @Test
     public void testUpdateClient_ClientNotFound() {
-        // Устанавливаем поведение мока для clientRepositoryMock
         when(clientRepositoryMock.findClientByTaxCode(anyString())).thenReturn(null);
-        // Вызываем тестируемый метод и ожидаем исключение
         assertThrows(ClientNotFoundException.class, () -> {
             clientServiceTest.updateClient("NonExistentTaxCode", "NewName", "NewLastName",
                     "new@test.com", "New Address", "+491234567890", Country.GERMANY, true);
         });
-        // Проверяем, что метод findClientByTaxCode был вызван
         verify(clientRepositoryMock).findClientByTaxCode("NonExistentTaxCode");
-        // Проверяем, что метод updateClient и save не были вызваны
         verify(clientRepositoryMock, never()).updateClient(anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), any(Country.class));
         verify(clientRepositoryMock, never()).save(any(Client.class));
     }
     @Test
     public void testCreateNewClient() {
-        // Устанавливаем поведение моков для clientRepositoryMock, clientMapperMock и passwordEncoderMock
         when(clientRepositoryMock.findClientByEmail(anyString())).thenReturn(null);
         when(clientMapperMock.toClient(any(ClientFullInfoDto.class))).thenReturn(expectedClient);
         when(passwordEncoderMock.encode(anyString())).thenReturn("password");
         when(clientRepositoryMock.save(any(Client.class))).thenReturn(expectedClient);
         Client result = clientServiceTest.createNewClient(expectedClientFullInfoDto);
-        // Проверяем, что результат соответствует ожидаемому
         assertEquals(expectedClient, result);
-        // Проверяем, что методы моков были вызваны с правильными параметрами
         verify(clientRepositoryMock).findClientByEmail(expectedClientFullInfoDto.getEmail());
         verify(clientMapperMock).toClient(expectedClientFullInfoDto);
         verify(passwordEncoderMock).encode(expectedClientFullInfoDto.getPassword());
@@ -231,20 +207,19 @@ public class ClientServiceTest {
     }
     @Test
     public void testCreateNewClient_EmailIsUsedException() {
-        // Устанавливаем поведение моков для clientRepositoryMock
         when(clientRepositoryMock.findClientByEmail(anyString())).thenReturn(expectedClient);
-        // Вызываем тестируемый метод и ожидаем исключение
-        // ClientFullInfoDto clientFullInfoDto = expectedClientFullInfoDto; // заполните объект данными
         assertThrows(EmailIsUsedException.class, () -> {
             clientServiceTest.createNewClient(expectedClientFullInfoDto);
         });
-
-        // Проверяем, что метод findClientByEmail был вызван
         verify(clientRepositoryMock).findClientByEmail(expectedClientFullInfoDto.getEmail());
-        // Проверяем, что методы clientMapperMock, passwordEncoderMock и clientRepositoryMock не были вызваны
         verify(clientMapperMock, never()).toClient(any(ClientFullInfoDto.class));
         verify(passwordEncoderMock, never()).encode(anyString());
         verify(clientRepositoryMock, never()).save(any(Client.class));
+    }
+    @Test
+    void testNotifyNewClient() {
+        clientServiceTest.notifyNewClient(expectedClient);
+        verify(emailServiceMok).sendEmail(eq("test@test.com"), eq("Registration completed successfully"), anyString());
     }
 }
 
