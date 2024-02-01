@@ -1,3 +1,6 @@
+--liquibase formatted sql
+--changeset bank:v.0.1.0-ddl
+
 
 create table if not exists die_bank.employees
 (

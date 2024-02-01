@@ -1,3 +1,5 @@
+--liquibase formatted sql
+--changeset bank:v.0.1.0-test-data
 
 INSERT INTO die_bank.employees (id, first_name, last_name, role, email, password, phone, country, created_at, updated_at, is_blocked)
 VALUES (UUID_TO_BIN('16200224-69e6-482b-a988-e0778ffd831e'), 'John', 'Deer', 'ADMIN', 'johndeer@bank.com',
