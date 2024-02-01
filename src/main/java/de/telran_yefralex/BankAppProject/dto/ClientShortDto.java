@@ -6,6 +6,7 @@ import lombok.*;
 @Setter
 @ToString
 public class ClientShortDto {
+
     String firstName;
     String lastName;
     String taxCode;

@@ -5,12 +5,12 @@ import de.telran_yefralex.BankAppProject.dto.ClientShortDto;
 import de.telran_yefralex.BankAppProject.entity.enums.Country;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 

@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class AgreementDto {
+
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
     private String accountNumber;

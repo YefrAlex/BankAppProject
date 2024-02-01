@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class EmployeeDto {
+
     String firstName;
     String lastName;
     Role role;
@@ -24,8 +25,4 @@ public class EmployeeDto {
     LocalDateTime createdAt;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     LocalDateTime updatedAt;
-//    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-//    List<Account> mainManagerAccounts;
-//    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-//    List<Account> assistantManagerAccounts;
 }

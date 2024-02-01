@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
+
     private final EmployeeRepository employeeRepository;
     private final ManagerMapper managerMapper;
     private final PasswordEncoder passwordEncoder;

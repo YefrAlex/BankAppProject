@@ -12,7 +12,6 @@ import java.util.UUID;
 @Repository
 public interface AccountRepository extends JpaRepository <Account, UUID> {
 
-
     @Query("select a from Account a where a.accountNumber = ?1")
     Optional <Account> getByNumber( String number);
 

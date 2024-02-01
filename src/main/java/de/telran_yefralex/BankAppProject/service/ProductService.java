@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductService {
+
     List<ProductDto> getAllActiveProductsDto();
 
     List<ProductDto> getActiveProductsWithType(ProductType productType);

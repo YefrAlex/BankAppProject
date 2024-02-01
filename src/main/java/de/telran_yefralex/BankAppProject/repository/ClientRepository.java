@@ -13,6 +13,7 @@ import java.util.UUID;
 
 @Repository
 public interface ClientRepository extends JpaRepository<Client, UUID> {
+
     @Query("select c from Client c where c.taxCode = ?1")
     Client findClientByTaxCode (String taxCode);
 

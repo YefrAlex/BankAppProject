@@ -34,6 +34,7 @@ public class ClientServiceImpl implements ClientService {
         this.passwordEncoder=passwordEncoder;
         this.emailService=emailService;
     }
+
     public ResponseEntity<List<ClientShortDto>> findAllShort() {
         List<Client> allClients=clientRepository.findAll();
         if (allClients.isEmpty()) {
@@ -44,6 +45,7 @@ public class ClientServiceImpl implements ClientService {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(DtoList);
     }
+
     public ClientShortDto findClientByTaxCode(String taxCode) {
         Client client=clientRepository.findClientByTaxCode(taxCode);
         if (client == null) {
@@ -51,6 +53,7 @@ public class ClientServiceImpl implements ClientService {
         }
         return clientMapper.toClientShortDto(client);
     }
+
     public ClientShortDto findClientByEmail(String email) {
         Client client=clientRepository.findClientByEmail(email);
         if (client == null) {
@@ -58,6 +61,7 @@ public class ClientServiceImpl implements ClientService {
         }
         return clientMapper.toClientShortDto(client);
     }
+
     public List<ClientFullInfoDto> findAllFullInfo() {
         List<Client> allClients=clientRepository.findAll();
         if (allClients.isEmpty()) {
@@ -67,6 +71,7 @@ public class ClientServiceImpl implements ClientService {
                 .map(clientMapper::toClientFullInfoDto)
                 .collect(Collectors.toList());
     }
+
     public void updateClient(String taxCode, String firstName, String lastName, String email, String address, String phone, Country country, Boolean isBlocked) {
         Client client=clientRepository.findClientByTaxCode(taxCode);
         if (client == null) {
@@ -78,6 +83,7 @@ public class ClientServiceImpl implements ClientService {
         }
         clientRepository.updateClient(taxCode, firstName, lastName, email, address, phone, country);
     }
+
     public Client createNewClient(ClientFullInfoDto clientFullInfoDto) {
         if (clientRepository.findClientByEmail(clientFullInfoDto.getEmail())!= null){
             throw new EmailIsUsedException(ErrorMessage.IS_USED, clientFullInfoDto.getEmail());
@@ -86,9 +92,11 @@ public class ClientServiceImpl implements ClientService {
         client.setId(null);
         client.setPassword(passwordEncoder.encode(clientFullInfoDto.getPassword()));
         client.setCreditRating(0);
-        notifyNewClient(client);
-        return clientRepository.save(client);
+        Client savedClient = clientRepository.save(client);
+        notifyNewClient(savedClient);
+        return savedClient;
     }
+
     public void notifyNewClient(Client client) {
         String to = client.getEmail();
         String subject = "Registration completed successfully";
@@ -96,5 +104,4 @@ public class ClientServiceImpl implements ClientService {
                 + "Thank you for opening a new account. Best regards, Your Bank";
         emailService.sendEmail(to, subject, body);
     }
-
 }

@@ -38,18 +38,4 @@ logging:
    level:
     com.sun.mail: DEBUG
     javax.mail: DEBUG
-#  openapi:
-#      info:
-#        title: Your API
-#        version: 1.0.0
-#      securitySchemes:
-#        bearerAuth:
-#          type: http
-#          scheme: bearer
-#          bearerFormat: JWT
-#      security:
-#        - bearerAuth: [ ]
-#  jwt:
-#    secret:
-#      access: mO2clU1rRiZnwJuVqAMowf8KNnhbuceE4ecueQ0wSRlWUOy/lMxg6OLkGGpVr4dlUMZdscAEWWSzZv9sjnZheA==
-#      refresh: 1oGv0JLsjUBNcmUyuJ31ad+dsla4H0NemlInOErtWp29LNqzDxtPa7T3au9GAsDA2vn98FfyVkSNX2pas2aDbw==
+

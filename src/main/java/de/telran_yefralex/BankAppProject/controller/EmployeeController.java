@@ -24,7 +24,6 @@ public class EmployeeController implements EmployeeControllerInterface {
 
     private final EmployeeServiceImpl employeeService;
 
-
     public EmployeeController(EmployeeServiceImpl employeeService) {
         this.employeeService=employeeService;
     }
@@ -42,7 +41,7 @@ public class EmployeeController implements EmployeeControllerInterface {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping("/update/{id}")
+    @PutMapping("/update/{email}")
     public ResponseEntity<String> updateEmployee(
             @PathVariable(name = "email") String email,
             @RequestParam(name = "firstName", required = false) String firstName,
@@ -61,5 +60,4 @@ public class EmployeeController implements EmployeeControllerInterface {
         Employee employee=employeeService.createNewEmployee(employeeDto);
         return ResponseEntity.created(URI.create("/" + employee.getId())).body(employee.getId());
     }
-
 }

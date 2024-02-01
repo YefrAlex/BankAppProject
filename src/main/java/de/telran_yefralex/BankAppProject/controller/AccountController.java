@@ -8,12 +8,12 @@ import de.telran_yefralex.BankAppProject.entity.Account;
 import de.telran_yefralex.BankAppProject.entity.enums.AccountType;
 import de.telran_yefralex.BankAppProject.entity.enums.CurrencyCode;
 import de.telran_yefralex.BankAppProject.service.impl.AccountServiceImpl;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.rmi.ServerException;
 import java.security.Principal;
 import java.util.List;
@@ -60,7 +60,7 @@ public class AccountController implements AccountControllerInterface {
 
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PostMapping("/new")
-    public ResponseEntity<HttpStatus> createNewAccount(@RequestBody AccountDto accountDto, Principal principal)
+    public ResponseEntity<HttpStatus> createNewAccount(@RequestBody @Valid AccountDto accountDto, Principal principal)
             throws ServerException {
         accountDto.setMainManager(principal.getName());
         Account account=accountService.saveAccount(accountDto);

@@ -15,33 +15,32 @@ public class LoggingAspect {
 
     private static final Logger log = LoggerFactory.getLogger(LoggingAspect.class);
 
-//        @Around("execution(* de.telran.bank.service..*(..)))")
-//        public Object mdcService(@NotNull final ProceedingJoinPoint joinPoint) throws Throwable {
-//            String queryMethod = joinPoint.getSignature().getName();
-//            Object[] args = joinPoint.getArgs();
-//            logBeforeServiceQuery(queryMethod, args);
-//            long startTime = System.currentTimeMillis();
-//
-//            try {
-//                Object result = joinPoint.proceed();
-//                logAfterServiceQuery(queryMethod, args, result, startTime);
-//                return result;
-//            } catch (Exception ex) {
-//                logAndGetErrorMessage(queryMethod, args, ex, startTime);
-//                throw ex;
-//            }
-//        }
+        @Around("execution(* de.telran_yefralex.BankAppProject..service..*(..)))")
+        public Object mdcService(@NotNull final ProceedingJoinPoint joinPoint) throws Throwable {
+            String queryMethod = joinPoint.getSignature().getName();
+            Object[] args = joinPoint.getArgs();
+            logBeforeServiceQuery(queryMethod, args);
+            long startTime = System.currentTimeMillis();
+
+            try {
+                Object result = joinPoint.proceed();
+                logAfterServiceQuery(queryMethod, args, result, startTime);
+                return result;
+            } catch (Exception ex) {
+                logAndGetErrorMessage(queryMethod, args, ex, startTime);
+                throw ex;
+            }
+        }
 
     @Around("execution(* de.telran_yefralex.BankAppProject.controller..*(..)))")
     public Object mdcServiceController(@NotNull final ProceedingJoinPoint joinPoint) throws Throwable {
         String queryMethod = joinPoint.getSignature().getName();
         Object[] args = joinPoint.getArgs();
-        logBeforeServiceQuery(queryMethod, args);
+        logBeforeControllerQuery(queryMethod, args);
         long startTime = System.currentTimeMillis();
-
         try {
             Object result = joinPoint.proceed();
-            logAfterServiceQuery(queryMethod, args, result, startTime);
+            logAfterControllerQuery(queryMethod, args, result, startTime);
             return result;
         } catch (Exception ex) {
             logAndGetErrorMessage(queryMethod, args, ex, startTime);
@@ -56,6 +55,14 @@ public class LoggingAspect {
         log.info("args={};", argsAsString);
         MDCFields.SERVICE_METHOD.removeMdcField();
         MDCFields.SERVICE_STEP.removeMdcField();
+    }
+    private void logBeforeControllerQuery(final String queryMethod, final Object[] args) {
+        MDCFields.CONTROLLER_STEP.putMdcField("CONTROLLER_IN");
+        MDCFields.CONTROLLER_METHOD.putMdcFieldWithFieldName(queryMethod);
+        String argsAsString = Arrays.toString(args);
+        log.info("args={};", argsAsString);
+        MDCFields.CONTROLLER_METHOD.removeMdcField();
+        MDCFields.CONTROLLER_STEP.removeMdcField();
     }
 
     private void logAfterServiceQuery(final String queryMethod, final Object[] args, final Object result, final long startTime) {
@@ -74,6 +81,22 @@ public class LoggingAspect {
         MDCFields.SERVICE_METHOD.removeMdcField();
         MDCFields.SERVICE_STEP.removeMdcField();
     }
+    private void logAfterControllerQuery(final String queryMethod, final Object[] args, final Object result, final long startTime) {
+        long callTime = System.currentTimeMillis() - startTime;
+        String resultInfo = LogUtils.getDaoResultLogInfo(log, result);
+        MDCFields.CONTROLLER_STEP.putMdcField("CONTROLLER_OUT");
+        MDCFields.CONTROLLER_METHOD.putMdcFieldWithFieldName(queryMethod);
+        MDCFields.CONTROLLER_TIME.putMdcFieldWithFieldName(callTime);
+        String argsAsString = Arrays.toString(args);
+        log.info(
+                "args={}; RESULT: [{}]",
+                argsAsString,
+                resultInfo
+        );
+        MDCFields.CONTROLLER_TIME.removeMdcField();
+        MDCFields.CONTROLLER_METHOD.removeMdcField();
+        MDCFields.CONTROLLER_STEP.removeMdcField();
+    }
 
     private void logAndGetErrorMessage(final String queryMethod, final Object[] args, final Exception ex, final long startTime) {
         long callTime = System.currentTimeMillis() - startTime;
@@ -81,7 +104,6 @@ public class LoggingAspect {
                 "args=%s;",
                 Arrays.toString(args)
         );
-
         MDCFields.DAO_STEP.putMdcField("DAO_ERROR");
         MDCFields.DAO_METHOD.putMdcFieldWithFieldName(queryMethod);
         MDCFields.DAO_TIME.putMdcFieldWithFieldName(callTime);
@@ -91,5 +113,4 @@ public class LoggingAspect {
         MDCFields.DAO_STEP.removeMdcField();
         throw new LogException(ex.getMessage(), ex);
     }
-
 }

@@ -3,6 +3,7 @@ package de.telran_yefralex.BankAppProject.exceptions;
 import java.time.LocalDateTime;
 
 public class ErrorResponseDto {
+
     private int status;
     private String message;
     private LocalDateTime timestamp;
@@ -14,6 +15,9 @@ public class ErrorResponseDto {
         this.status=status;
         this.message=message;
         this.timestamp=timestamp;
+    }
+
+    public ErrorResponseDto(String message, String localizedMessage) {
     }
 
     public int getStatus() {

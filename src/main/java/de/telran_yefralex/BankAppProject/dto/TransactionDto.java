@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class TransactionDto {
+
         private String debitAccountNumber;
         private String creditAccountNumber;
         private BigDecimal amount;

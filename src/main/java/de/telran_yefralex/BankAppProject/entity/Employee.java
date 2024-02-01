@@ -20,6 +20,7 @@ import java.util.*;
 @Entity
 @Table(name="employees")
 public class Employee {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @UuidGenerator(style = UuidGenerator.Style.TIME)
@@ -67,16 +68,10 @@ public class Employee {
     private boolean isBlocked;
 
     @OneToMany(mappedBy = "mainManagerId", cascade = CascadeType.ALL)
-//    @OneToMany(mappedBy = "mainManagerId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonBackReference
     private Set<Account> mainManagerAccounts = new HashSet<>();
 
    @OneToMany(mappedBy = "assistantManagerId", cascade = CascadeType.ALL)
-//    @OneToMany(mappedBy = "assistantManagerId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
    @JsonBackReference
  private Set<Account> assistantManagerAccounts = new HashSet<>();
 

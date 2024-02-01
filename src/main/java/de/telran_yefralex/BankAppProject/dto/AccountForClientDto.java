@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class AccountForClientDto {
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     ManagerForClientDto mainManager;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     ManagerForClientDto assistantManager;

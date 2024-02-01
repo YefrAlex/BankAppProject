@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum ProductType {
+
     LOAN("cash loan"),
     AUTO_LOAN("car loan"),
     MORTGAGE("hypothec"),

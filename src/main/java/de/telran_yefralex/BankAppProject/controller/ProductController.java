@@ -37,12 +37,14 @@ public class ProductController implements ProductControllerInterface {
         List<ProductDto> productsDto=productService.getActiveProductsWithType(productType);
         return ResponseEntity.ok(productsDto);
     }
+
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @GetMapping("/id/{id}")
     public ResponseEntity<ProductDto> getProductDtoById(@PathVariable(name = "id") Long id) {
         ProductDto productDto=productService.getProductDtoById(id);
         return ResponseEntity.ok(productDto);
     }
+
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateProduct(
@@ -54,6 +56,7 @@ public class ProductController implements ProductControllerInterface {
         productService.updateProduct(id, interestRate, limit, limitDuration, isBlocked);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PostMapping("/create")
     public ResponseEntity<Long> createNewProduct(@RequestBody ProductDto productDto) {

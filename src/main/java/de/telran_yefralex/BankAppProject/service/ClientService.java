@@ -15,18 +15,15 @@ import java.util.UUID;
 
 public interface ClientService {
 
-
-
-
      void updateClient(String taxCode, String firstName, String lastName, String email, String address, String phone, Country country, Boolean isBlocked);
+
      Client createNewClient(ClientFullInfoDto clientFullInfoDto);
 
-
      ResponseEntity<List<ClientShortDto>> findAllShort();
+
      ClientShortDto findClientByTaxCode (String taxCode);
+
      ClientShortDto findClientByEmail (String email);
+
      List<ClientFullInfoDto> findAllFullInfo();
-
-
-
 }

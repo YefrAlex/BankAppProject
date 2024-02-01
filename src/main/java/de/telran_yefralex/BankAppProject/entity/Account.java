@@ -47,7 +47,6 @@ public class Account {
     @JsonManagedReference
     private Employee mainManagerId;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "assistant_manager_id", referencedColumnName = "id")
@@ -83,8 +82,6 @@ public class Account {
     @Column(name = "is_blocked", nullable = false)
     private boolean isBlocked;
 
-
-
     @OneToMany( mappedBy = "debitAccountId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Transaction> debitTransactions = new HashSet<>();
     @OneToMany( mappedBy = "creditAccountId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -102,6 +99,4 @@ public class Account {
     public int hashCode() {
         return Objects.hash(id);
     }
-
-
 }

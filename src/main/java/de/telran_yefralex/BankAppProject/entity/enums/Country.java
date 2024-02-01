@@ -1,6 +1,7 @@
 package de.telran_yefralex.BankAppProject.entity.enums;
 
 public enum Country {
+
     AUSTRIA,
     BELGIUM,
     BULGARIA,

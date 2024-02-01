@@ -66,5 +66,4 @@ public class AgreementController implements AgreementControllerInterface {
         agreementService.updateAgreement(id, interestRate, amount, duration, isBlocked);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

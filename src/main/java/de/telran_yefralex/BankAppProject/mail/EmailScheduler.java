@@ -15,7 +15,6 @@ public class EmailScheduler {
         this.emailService=emailService;
     }
 
-
     @Scheduled(cron = "0 0 12 * * MON") // Каждый понедельник в 12:00 PM
     public void sendWeeklyEmails() {
         emailService.sendAccountsBalance();

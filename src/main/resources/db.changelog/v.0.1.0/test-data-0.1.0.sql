@@ -1,5 +1,3 @@
---liquibase formatted sql
---changeset bank:v.0.1.0-test-data
 
 INSERT INTO die_bank.employees (id, first_name, last_name, role, email, password, phone, country, created_at, updated_at, is_blocked)
 VALUES (UUID_TO_BIN('16200224-69e6-482b-a988-e0778ffd831e'), 'John', 'Deer', 'ADMIN', 'johndeer@bank.com',
@@ -42,7 +40,7 @@ VALUES (UUID_TO_BIN('7e78faba-3e6a-4e6c-9e12-b6054a9cd2b2'), 'Lukas', 'Skyhammer
        '$2a$04$U.pF7LPivIFtjozAIrMk/eoWS9BKbX6Nr7KMN/xYOQ5sKfCZrNO3a', 'Waisenstrasse 14, 10117 Berlin', '+789545432', 'GERMANY', '2023-10-08 13:57:40', '2023-10-08 13:57:40', false),
        (UUID_TO_BIN('50f3d138-c2f5-426f-a695-e86d5acc5fc1'), 'Kurt', 'Aisman', '387-54367-333', '510', 'kurtaisman@exempl.com',
        '$2a$04$U.pF7LPivIFtjozAIrMk/eoWS9BKbX6Nr7KMN/xYOQ5sKfCZrNO3a', 'Behrenstraße 135, 10117 Berlin', '+789123678', 'GERMANY', '2023-10-09 13:57:40', '2023-10-09 13:57:40', false),
-       (UUID_TO_BIN('daf07ca2-7e65-4fbf-aac4-fc3f08cd526e'), 'Friz', 'Shlag', '517-59835-247', '530', 'lotom44324@wentcity.com',
+       (UUID_TO_BIN('daf07ca2-7e65-4fbf-aac4-fc3f08cd526e'), 'Friz', 'Shlag', '517-59835-247', '530', 'aresboo@gmail.com',
        '$2a$04$U.pF7LPivIFtjozAIrMk/eoWS9BKbX6Nr7KMN/xYOQ5sKfCZrNO3a', 'Fischerinsel 38, 10117 Berlin', '+789900547', 'GERMANY', '2023-10-12 13:57:40', '2023-10-12 13:57:40', false);
 
 

@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class ProductDto {
+
     private String productType;
     private String currency;
     private BigDecimal interestRate;

@@ -30,8 +30,6 @@ public class JwtProvider {
     private final SecretKey jwtRefreshSecret;
 
     public JwtProvider(
-//            @Value("${jwt.secret.access}") String jwtAccessSecret,
-//            @Value("${jwt.secret.refresh}") String jwtRefreshSecret
     ) {
         String jwtAccessSecret = "mO2clU1rRiZnwJuVqAMowf8KNnhbuceE4ecueQ0wSRlWUOy/lMxg6OLkGGpVr4dlUMZdscAEWWSzZv9sjnZheA==";
         String jwtRefreshSecret = "1oGv0JLsjUBNcmUyuJ31ad+dsla4H0NemlInOErtWp29LNqzDxtPa7T3au9GAsDA2vn98FfyVkSNX2pas2aDbw==";

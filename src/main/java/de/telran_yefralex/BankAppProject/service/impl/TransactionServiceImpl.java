@@ -34,14 +34,12 @@ public class TransactionServiceImpl implements TransactionService {
     private final AccountRepository accountRepository;
     private final EmailService emailService;
 
-
     public TransactionServiceImpl(TransactionRepository transactionRepository, TransactionMapper transactionMapper, AccountRepository accountRepository, EmailService emailService) {
         this.transactionRepository=transactionRepository;
         this.transactionMapper=transactionMapper;
         this.accountRepository=accountRepository;
         this.emailService=emailService;
     }
-
 
     @Override
     public List<TransactionDto> getAllTransactions() {
@@ -151,7 +149,6 @@ public class TransactionServiceImpl implements TransactionService {
                 " transaction id =  " + transaction.getId();
         emailService.sendEmail(to, subject, body);
     }
-
 }
 
 

@@ -14,7 +14,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,7 +24,6 @@ public class ClientController implements ClientControllerInterface {
 
     public final ClientServiceImpl clientService;
 
-
     public ClientController(ClientServiceImpl clientService) {
         this.clientService=clientService;
     }
@@ -35,21 +33,25 @@ public class ClientController implements ClientControllerInterface {
     public ResponseEntity<ResponseEntity<List<ClientShortDto>>> findAllShort() {
         return ResponseEntity.ok(clientService.findAllShort());
     }
+
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @GetMapping("/find/taxcode/{taxCode}")
     public ResponseEntity<ClientShortDto> findByTaxCode(@PathVariable(name = "taxCode") String taxCode) {
         return ResponseEntity.ok(clientService.findClientByTaxCode(taxCode));
     }
+
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @GetMapping("/find/email/{email}")
     public ResponseEntity<ClientShortDto> findByEmail(@PathVariable(name = "email") String email) {
         return ResponseEntity.ok(clientService.findClientByEmail(email));
     }
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/find/all/full")
     public ResponseEntity<List<ClientFullInfoDto>> findAllFullInfo() {
         return ResponseEntity.ok(clientService.findAllFullInfo());
     }
+
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PutMapping("/update/{taxCode}")
     public ResponseEntity<String> updateClient(
@@ -64,12 +66,11 @@ public class ClientController implements ClientControllerInterface {
         clientService.updateClient(taxCode, firstName, lastName, email, address, phone, country, isBlocked);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PostMapping("/create")
-    public ResponseEntity<UUID> createNewClient(@RequestBody ClientFullInfoDto clientFullInfoDto) {
+    public ResponseEntity<UUID> createNewClient(@RequestBody ClientFullInfoDto clientFullInfoDto){
         Client client = clientService.createNewClient(clientFullInfoDto);
         return ResponseEntity.created(URI.create("/" + client.getId())).body(client.getId());
     }
-
-
 }

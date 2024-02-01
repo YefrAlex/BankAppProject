@@ -4,6 +4,7 @@ package de.telran_yefralex.BankAppProject.dto;
 import com.fasterxml.jackson.annotation.*;
 import de.telran_yefralex.BankAppProject.entity.enums.Country;
 
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 
@@ -20,6 +21,7 @@ public class ClientFullInfoDto {
     String lastName;
     String taxCode;
     String email;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String password;
     String address;
     String phone;
@@ -30,7 +32,5 @@ public class ClientFullInfoDto {
     LocalDateTime updatedAt;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     List<AccountForClientDto> accounts;
-
-
 }
 

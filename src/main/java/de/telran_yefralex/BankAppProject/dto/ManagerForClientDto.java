@@ -7,6 +7,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 public class ManagerForClientDto {
+
     String firstName;
     String lastName;
     String email;

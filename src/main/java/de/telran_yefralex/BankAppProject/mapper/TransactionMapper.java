@@ -16,7 +16,6 @@ public interface TransactionMapper  {
     @Mapping(source = "createdAt", target = "createdAt", qualifiedByName = "mapToDate")
     TransactionDto toTransactionDto(Transaction transaction);
 
-
     Transaction toTransaction(TransactionDto transactionDto);
 
     @IterableMapping(qualifiedByName = "toTransactionDto")

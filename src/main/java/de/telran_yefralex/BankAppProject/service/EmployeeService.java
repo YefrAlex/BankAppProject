@@ -9,10 +9,14 @@ import java.util.List;
 import java.util.UUID;
 
 public interface EmployeeService {
-    List<EmployeeDto> getAll();
-    List<EmployeeDto> getAllByRole(Role role);
-    EmployeeDto getEmployeeByName(String firstName, String LastName);
-    void updateEmployee(String firstName, String lastName, Role role, String email, String phone, Country country, Boolean isBlocked);
-    Employee createNewEmployee (EmployeeDto employeeDto);
 
+    List<EmployeeDto> getAll();
+
+    List<EmployeeDto> getAllByRole(Role role);
+
+    EmployeeDto getEmployeeByName(String firstName, String LastName);
+
+    void updateEmployee(String firstName, String lastName, Role role, String email, String phone, Country country, Boolean isBlocked);
+
+    Employee createNewEmployee (EmployeeDto employeeDto);
 }

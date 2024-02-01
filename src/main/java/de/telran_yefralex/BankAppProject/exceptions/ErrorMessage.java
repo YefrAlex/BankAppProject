@@ -12,12 +12,8 @@ public class ErrorMessage {
     public static final String CLIENT_NOT_FOUND = "unfortunately no such client was found, check that the %s is correct";
     public static final String EMPTY_EMPLOYEES_LIST = "unfortunately the list of employee does not contain any element";
     public static final String EMPLOYEE_NOT_FOUND = "unfortunately no such client was found, check that the %s is correct";
-
     public static final String EMPTY_TRANSACTIONS_LIST = "unfortunately the list of transactions does not contain any element";
-
     public static final String TRANSACTION_NOT_FOUND = "unfortunately no such transaction was found, check that the %s is correct";
-
     public static final String BALANCE_EX = "not enough funds in the account";
-
     public static final String IS_USED = "this email %s is already used";
 }

@@ -20,6 +20,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 @EnableMethodSecurity
 public class SecurityConfig {
+
     private final JwtFilter jwtFilter;
 
     @Bean
@@ -41,7 +42,6 @@ public class SecurityConfig {
                                        "/swagger-ui/**",
                                        "/product/all-active",
                                        "/product/all-active/{type}"
-//                               "/**"
                               )
                                 .permitAll()
                                 .anyRequest().authenticated()

@@ -27,12 +27,14 @@ public interface AgreementControllerInterface {
             description = "allows the client to get information about all his contracts, requires the role of user"
     )
     ResponseEntity<List<AgreementDto>> getMyAgreements(Principal principal);
+
     @Operation(
             summary = "create a new agreement",
             description = "allows you to create a new agreement, requires the role of manager"
     )
     ResponseEntity<HttpStatus> createNewAgreement(@RequestBody AgreementDto agreementDto)
             throws ServerException;
+
     @Operation(
             summary = "update agreement",
             description = "allows you to update agreement, requires the role of manager"

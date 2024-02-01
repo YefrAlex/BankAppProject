@@ -27,7 +27,6 @@ public class AgreementServiceImpl implements AgreementService {
     private final AccountRepository accountRepository;
     private final ProductRepository productRepository;
 
-
     public AgreementServiceImpl(AgreementRepository agreementRepository, AgreementMapper agreementMapper, AccountRepository accountRepository, ProductRepository productRepository) {
         this.agreementRepository=agreementRepository;
         this.agreementMapper=agreementMapper;

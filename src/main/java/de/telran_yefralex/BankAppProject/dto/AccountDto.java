@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class AccountDto {
+
     private String taxCode;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String mainManager;

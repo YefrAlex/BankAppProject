@@ -19,8 +19,6 @@ public interface AccountService {
 
     AccountDto getAccountByNumber(String accountNumber);
 
-//    Optional<Account> findByIdForTransaction(UUID id);
-
     Account saveAccount(AccountDto accountDto);
 
     void updateAccount(String accountNumber, String mainManagerEmail, String assistantManagerEmail, AccountType type, CurrencyCode currencyCode, Boolean isBlocked);

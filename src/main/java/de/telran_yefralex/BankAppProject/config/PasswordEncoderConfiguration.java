@@ -12,9 +12,3 @@ public class PasswordEncoderConfiguration {
     }
 }
 
-//    public static void main(String[] args) {
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(4);
-//        System.out.println(encoder.encode("user"));
-//    }
-//  qwe ==   $2a$04$U.pF7LPivIFtjozAIrMk/eoWS9BKbX6Nr7KMN/xYOQ5sKfCZrNO3a
-// user ==
